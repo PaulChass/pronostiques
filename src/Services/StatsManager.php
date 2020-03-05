@@ -26,16 +26,28 @@ class StatsManager
             array_push($matchsDeLaNuit,$match);
         }
         return $matchsDeLaNuit;
-        
+    }
+
+    public function teamStats($teamId)
+    {
+        $teams=$this->curlRequest('https://elpauloloco.ovh/teamstats.json');     
+        $i=0;$teamstats=[];
+        while($teamsstats->resultSets[0]->rowSet[$i][0] != $teamId){$i++;}
+        $teamstats['Team']=$teamstats->resultSets[0]->rowSet[$i][1];
+        $teamstats['TeamLogo']='https://stats.nba.com/media/img/teams/logos/'.$team.'_logo.svg';
+        $teamstats['Wins'] = $teamsstats->resultSets[0]->rowSet[$i][3];
+        $teamstats['Losses'] = $teamsstats->resultSets[0]->rowSet[$i][4];
+        $teamstats['Points'] = $teamsstats->resultSets[0]->rowSet[$i][26];
+        $teamstats['Possessions']= $teamsstats->resultSets[0]->rowSet[$i][4];
+        $teamstats['Rebounds'] = $teamsstats->resultSets[0]->rowSet[$i][18];
+        $teamstats['Assists'] = $teamsstats->resultSets[0]->rowSet[$i][19];
+        $teamstats['BlockedShots'] = $teamsstats->resultSets[0]->rowSet[$i][22];
+        $teamstats['Turnovers'] =$teamsstats->resultSets[0]->rowSet[$i][20];
+        $teamstats['FieldGoalsPercentage'] = $teamsstats->resultSets[0]->rowSet[$i][9];
+        return $teamstats;
+    }   
       
 
-
-
-
-           
-        dump($matchsDeLaNuit);
-        dump($response);die;
-    }
 
 
 

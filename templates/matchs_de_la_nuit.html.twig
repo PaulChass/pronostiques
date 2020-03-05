@@ -15,6 +15,8 @@
                 <img src="{{match.AwayLogoUrl}}" class="mx-auto card-img" style="max-height:2.5rem;"></li>
             <li class="list-group-item"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
                 {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+            <li class="list-group-item">
+                <a class="dropdown_item" href={{ path('face-a-face', {hometeam: match.HomeTeamId,awayteam: match.AwayTeamId}) }}> Face à Face </a></li>
         </div>
     {% endfor %}
     </div>

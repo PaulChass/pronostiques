@@ -21,4 +21,12 @@ class MainController extends AbstractController
             'matchs'=>$matchsDeLaNuit,
         ]);
     }
+
+    /**
+     * @Route("/face-a-face/{hometeam}{awayteam}", name="face-a-face")
+     */
+    public function faceAface(StatsManager $StatsManager)
+    {
+        echo "Ok"; die;
+    }
 }
