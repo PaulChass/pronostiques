@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matchs de la nuit{% endblock %}
+
+
+{% block body %}
+<h1 class="mx-auto jumbotron" style="text-align:center">Matchs de la nuit</h1>
+<div class="container  ">
+    <div class="row">
+    {% for match in matchs  %}
+        <div class="card fa" style="width:10rem;margin:1rem;">   
+            <li class="list-group-item">
+                <img src="{{match.HomeLogoUrl}}" class="mx-auto card-img" style="max-height:2.5rem;"></li>
+            <li class="list-group-item">
+                <img src="{{match.AwayLogoUrl}}" class="mx-auto card-img" style="max-height:2.5rem;"></li>
+            <li class="list-group-item"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
