@@ -23,10 +23,14 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/face-a-face/{hometeam}{awayteam}", name="face-a-face")
+     * @Route("/face-a-face/{hometeam}/{awayteam}", name="face-a-face")
      */
-    public function faceAface(StatsManager $StatsManager)
+    public function faceAface(StatsManager $StatsManager, int $hometeam, int $awayteam)
     {
-        echo "Ok"; die;
+        
+        $statsDomicile = $StatsManager -> StatsEquipe($hometeam);
+        $statsExterieur = $StatsManager -> StatsEquipe($awayteam);
+        $cotes = $StatsManager -> CotesFaceAFace($hometeam,$awayteam);
+        dump($statsDomicile);dump($statsExterieur);dump($cotes);die;
     }
 }
