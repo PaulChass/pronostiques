@@ -1,3 +1,25 @@
 body {
     background-color: lightgray;
+    margin: 0px 80px 0px 80px;
 }
+.btn-group{padding-left:50vh;padding-right:50vh; }
+a:link {
+  color: grey;
+}
+
+/* visited link */
+a:visited {
+  color: grey;
+}
+
+/* mouse over link */
+a:hover {
+  color: black;
+}
+
+/* selected link */
+a:active {
+  color: green;
+}
+
+.card:hover {border-color:black;}

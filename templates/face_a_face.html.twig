@@ -1,0 +1,255 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ stats_domicile.Team }} VS {{ stats_exterieur.Team}}
+{% endblock %}
+
+
+{% block body %}
+{% include 'matchs_de_la_nuit.html.twig' %}
+
+
+    {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':stats_domicile,'away':stats_exterieur, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
+    {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':stats5_dom,'away':stats5_ext, 'arrayTitle':'Stats Equipe 5 derniers ( différence )'} %}
+    {% include 'statarraytemplate.html.twig' with {'id': 'location','home':statsHome,'away':statsRoad, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
+  
+
+
+
+
+
+
+
+
+
+
+
+<div id="advanced" class="stats">   
+<div class="btn-group" style="margin:10px;" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-lg btn-primary btn-overall">Générales</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-last5">5 derniers </button>
+  <button type="button" class=overall"btn btn-lg btn-secondary btn-location">Domcile/Exterieur</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-advanced">Avancées</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-players">Joueurs</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-injuries">Infirmerie </button>
+</div> 
+
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col" style="margin-top: 50vh;transform: translateY(-25%);">Par match (stats)</th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_domicile.team_abv}}_logo.svg"/></th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_exterieur.team_abv}}_logo.svg"/></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Bilan</th>
+      <td>{{stats_domicile.wins}}/{{stats_domicile.losses}} ( {{stats_domicile.Rank}} ) </td>
+      <td>{{stats_exterieur.wins}}/{{stats_exterieur.losses}} ( {{stats_exterieur.Rank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">Points</th>
+      <td>{{stats_domicile.points}} ( {{stats_domicile.pointsRank}} )</td>
+      <td>{{stats_exterieur.points}} ( {{stats_exterieur.pointsRank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">%Tir</th>
+      <td>{{stats_domicile.fg_pct}} ( {{stats_domicile.fg_pctRank}} )</td>
+      <td>{{stats_exterieur.fg_pct}} ( {{stats_exterieur.fg_pctRank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">Rebonds</th>
+      <td>{{stats_domicile.rebounds}} ( {{stats_domicile.reboundsRank}} )</td>
+      <td>{{stats_exterieur.rebounds}} ( {{stats_exterieur.reboundsRank}} )</td>
+    </tr>
+     <tr>
+      <th scope="row">Contres</th>
+      <td> {{stats_domicile.blocks}} ( {{stats_domicile.blocksRank}} )</td>
+      <td> {{stats_exterieur.blocks}} ( {{stats_exterieur.blocksRank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">Passes Dec</th>
+      <td> {{stats_domicile.assists}} ( {{stats_domicile.assistsRank}} )</td>
+      <td> {{stats_exterieur.assists}} ( {{stats_exterieur.assistsRank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">Interceptions</th>
+      <td> {{stats_domicile.steals}} ( {{stats_domicile.stealsRank}} )</td>
+      <td> {{stats_exterieur.steals}} ( {{stats_exterieur.stealsRank}} )</td>
+    </tr>
+    <tr>
+      <th scope="row">Pertes de balle</th>
+      <td>{{stats_domicile.turnovers}} ( {{stats_domicile.turnoversRank}} )</td>
+      <td>{{stats_exterieur.turnovers}} ( {{stats_exterieur.turnoversRank}} )</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+<div id="players" class="stats">   
+<div class="btn-group" style="margin:10px;" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-lg btn-secondary btn-overall">Générales</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-last5">5 derniers </button>
+  <button type="button" class="btn btn-lg btn-secondary btn-location">Domcile/Exterieur</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-advanced">Avancées</button>
+  <button type="button" class="btn btn-lg btn-primary btn-players">Joueurs</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-injuries">Infirmerie </button>
+</div> 
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{stats_domicile.team_abv}}_logo.svg"/></th>
+      <th scope="col"> Points </th>
+          <th scope="col"> %Tir</th>
+      <th scope="col"> Reb</th>
+      <th scope="col">Pd</th>
+      <th scope="col"> PdB </t  h>
+        <th scope="col"> Int </th>
+          <th scope="col"> Ctr </th>
+            <th scope="col"> +/- </th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for joueur in joueurs_domicile %}
+      <tr>
+      <td>{{joueur.name}} </td>
+      <td>{{joueur.points}} 
+      {% if joueur.pointsRank < 50 %}({{joueur.pointsRank}}){% endif %}</td>
+       <td> {{joueur.fg_pct}}
+       {% if joueur.fg_pctRank < 50 %}({{joueur.fg_pctRank}}){% endif %}</td>
+      <td>{{joueur.rebounds}}
+      {% if joueur.reboundsRank < 50 %}({{joueur.reboundsRank}}){% endif %}</td>
+      <td>{{joueur.assists}}
+      {% if joueur.assistsRank < 50 %}({{joueur.assistsRank}}){% endif %}</td>
+      <td> {{joueur.turnovers}}
+      {% if joueur.turnoversRank < 50 %}({{joueur.turnoversRank}}){% endif %}</td>
+       <td> {{joueur.steals}}
+       {% if joueur.stealsRank < 50 %}({{joueur.stealsRank}}){% endif %}</td>
+        <td> {{joueur.blocks}}
+        {% if joueur.blocksRank < 50 %}({{joueur.blocksRank}}){% endif %}</td>
+         <td> {{joueur.plusminus}}{% if joueur.plusminusRank < 50 %}({{joueur.plusminusRank}}){% endif %}</td>
+
+      
+    </tr> 
+{% endfor %}
+   </tbody>
+   
+</table>
+
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{stats_exterieur.team_abv}}_logo.svg"/></th>
+      <th scope="col"> Points </th>
+          <th scope="col"> %Tir</th>
+      <th scope="col"> Reb</th>
+      <th scope="col">Pd</th>
+      <th scope="col"> PdB </t  h>
+        <th scope="col"> Int </th>
+          <th scope="col"> Ctr </th>
+            <th scope="col"> +/- </th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for joueur in joueurs_exterieur %}
+      <tr>
+      <td>{{joueur.name}} </td>
+      <td>{{joueur.points}} 
+      {% if joueur.pointsRank < 50 %}({{joueur.pointsRank}}){% endif %}</td>
+       <td> {{joueur.fg_pct}}
+       {% if joueur.fg_pctRank < 50 %}({{joueur.fg_pctRank}}){% endif %}</td>
+      <td>{{joueur.rebounds}}
+      {% if joueur.reboundsRank < 50 %}({{joueur.reboundsRank}}){% endif %}</td>
+      <td>{{joueur.assists}}
+      {% if joueur.assistsRank < 50 %}({{joueur.assistsRank}}){% endif %}</td>
+      <td> {{joueur.turnovers}}
+      {% if joueur.turnoversRank < 50 %}({{joueur.turnoversRank}}){% endif %}</td>
+       <td> {{joueur.steals}}
+       {% if joueur.stealsRank < 50 %}({{joueur.stealsRank}}){% endif %}</td>
+        <td> {{joueur.blocks}}
+        {% if joueur.blocksRank < 50 %}({{joueur.blocksRank}}){% endif %}</td>
+         <td> {{joueur.plusminus}}{% if joueur.plusminusRank < 50 %}({{joueur.plusminusRank}}){% endif %}</td>
+
+      
+    </tr> 
+{% endfor %}
+   </tbody>
+   
+</table>
+</div>
+
+
+
+
+
+
+<div id="injuries" class="stats">   
+<div class="btn-group" style="margin:10px;" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-lg btn-secondary btn-overall">Générales</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-last5">5 derniers </button>
+  <button type="button" class="btn btn-lg btn-secondary btn-location">Domcile/Exterieur</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-advanced">Avancées</button>
+  <button type="button" class="btn btn-lg btn-primary btn-players">Joueurs</button>
+  <button type="button" class="btn btn-lg btn-secondary btn-injuries">Infirmerie </button>
+</div> 
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+       <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{stats_domicile.team_abv}}_logo.svg"/> Nom </th>
+          <th scope="col"> Blessure</th>
+      <th scope="col"> Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for blesse in infirmerie_domicile %}
+    <td> {{blesse.player}} </td>
+    <td> {{blesse.injury}} </td>
+    <td> {{blesse.status}} </td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+       <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{stats_exterieur.team_abv}}_logo.svg"/>
+       Nom </th>
+          <th scope="col"> Blessure</th>
+      <th scope="col"> Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for blesse in infirmerie_exterieur %}
+    
+    <td> {{blesse.player}} </td>
+    <td> {{blesse.injury}} </td>
+    <td> {{blesse.status}} </td>
+    </tr>
+     {% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+
+{% endblock %}

@@ -1,7 +1,10 @@
 <?php
 namespace App\Services;
 
-class StatsManager
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+
+class StatsManager 
 {
     /**
  * Retourne la liste des matchs de la nuit NBA 
@@ -39,49 +42,9 @@ class StatsManager
         return $matchsDeLaNuit;
     }
 
-    /**
-     * Renvoi un tableau des moyennes statistique pour l'équipe donné
-     *
-     * @uses getAbvFromTeam()  
-     * @uses https://stats.nba.com/media/img/teams/logos/
-     * @uses https://elpauloloco.ovh/teamstats.json  (sauvegarde des stats par équipe de nbastats )
-     *
-     * 
-     * @param int $teamId
-     * id de l'équipe (d'après nbastats)
-     * @return array
-     *     tableau avec noms et id des équipes à domicile et à l'exterieur ainsi que la date
-     *     
-    **/
-    public function StatsEquipe($teamId)
-    {
-        $teamsstats=$this->curlRequest('https://elpauloloco.ovh/teamstats.json');     
-        $i=0;$teamstats=[];
-        while($teamsstats->resultSets[0]->rowSet[$i][0] != $teamId){$i++;}
-        $teamstats['Team']=$teamsstats->resultSets[0]->rowSet[$i][1];
-        $teamstats['TeamLogo']='https://stats.nba.com/media/img/teams/logos/'.$this->getAbvFromId($teamId).'_logo.svg';
-        $teamstats['Wins'] = $teamsstats->resultSets[0]->rowSet[$i][3];
-        $teamstats['Losses'] = $teamsstats->resultSets[0]->rowSet[$i][4];
-        $teamstats['Points'] = $teamsstats->resultSets[0]->rowSet[$i][26];
-        $teamstats['Possessions']= $teamsstats->resultSets[0]->rowSet[$i][4];
-        $teamstats['Rebounds'] = $teamsstats->resultSets[0]->rowSet[$i][18];
-        $teamstats['Assists'] = $teamsstats->resultSets[0]->rowSet[$i][19];
-        $teamstats['BlockedShots'] = $teamsstats->resultSets[0]->rowSet[$i][22];
-        $teamstats['Turnovers'] =$teamsstats->resultSets[0]->rowSet[$i][20];
-        $teamstats['FieldGoalsPercentage'] = $teamsstats->resultSets[0]->rowSet[$i][9];
-        return $teamstats;
-    }   
+   
+   
 
-    /**
- * \file main.c
- * \brief Programme de tests.
- * \author Franck.H
- * \version 0.1
- * \date 11 septembre 2007
- *
- * Programme de test pour l'objet de gestion des chaînes de caractères Str_t.
- *
- */
     public function CotesFaceAFace($homeId,$awayId)
     {
         $cotesParionsSport = $this->curlRequest('https://www.pointdevente.parionssport.fdj.fr/api/1n2/offre?sport=601600');
@@ -106,6 +69,165 @@ class StatsManager
         }
       
 
+    /**
+     * Renvoi un tableau des moyennes statistique pour l'équipe donné
+     *
+     * @uses returnStats()
+     * @uses http://www.elpauloloco.ovh/TeamsStats.json  (sauvegarde des stats par équipe de nbastats )
+     *
+     * 
+     * @param int $teamId
+     * id de l'équipe (d'après nbastats)
+     * @return array
+     *     tableau avec stats des équipes à domicile et à l'exterieur ainsi que la date
+     *     
+    **/
+    public function teamStats($teamId)
+    {
+        $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/TeamsStats.json');
+        $defTeamsStats = $this->curlRequest('http://www.elpauloloco.ovh/DefTeamsStats.json');
+        $teamStats = $this->returnStats($teamId,$teamsStats,$defTeamsStats);
+        return $teamStats;
+    } 
+    
+    public function teamStats5($teamId)
+    {
+        
+        $teams5Stats = $this->curlRequest('http://www.elpauloloco.ovh/Last5TeamStats.json');
+        $team5Stats = $this->returnStats($teamId,$teams5Stats,null);
+        $teamStats= $this->teamStats($teamId);
+        $team5Stats['pointsdiff']=$team5Stats['points']-$teamStats['points']; 
+        $team5Stats['pointsRank']=  $team5Stats['pointsdiff'];
+        $team5Stats['fg_pctRank']=$team5Stats['fg_pct']-$teamStats['fg_pct']; 
+        $team5Stats['reboundsRank']=$team5Stats['rebounds']-$teamStats['rebounds']; 
+        $team5Stats['blocksRank']=$team5Stats['blocks']-$teamStats['blocks']; 
+        $team5Stats['assistsRank']=$team5Stats['assists']-$teamStats['assists']; 
+        $team5Stats['stealsRank']=$team5Stats['steals']-$teamStats['steals']; 
+        $team5Stats['turnoversRank']=$teamStats['turnovers']-$team5Stats['turnovers']; 
+        return $team5Stats;
+    }   
+
+    public function locationStats($teamId, $location)
+    {
+        if ($location = 'Home')
+        {
+            $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/HomeTeamStats.json');
+            $teamStats = $this->returnStats($teamId,$teamsStats,null);
+            return $teamStats;
+        }
+        $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/RoadTeamStats.json');
+        $teamStats = $this->returnStats($teamId,$teamsStats,null);
+        return $teamStats;
+
+    }
+
+    public function advancedTeamStats($teamId)
+    {
+        
+        $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/AdvancedTeamStats.json');
+        $teamStats = $this->returnStats($teamId,$teamsStats,null);
+        return $teamStats;
+    }   
+
+    public function players($teamId)
+    {
+        $playersStats =  $this->curlRequest('http://www.elpauloloco.ovh/PlayersStats.json');
+        $players=[];$player=[];
+        for ($i=0; $i < count($playersStats->resultSets[0]->rowSet) ; $i++) { 
+            if ($playersStats->resultSets[0]->rowSet[$i][2]==$teamId)
+                {
+                    $player['id']=$playersStats->resultSets[0]->rowSet[$i][0];
+                    $player['name']=$playersStats->resultSets[0]->rowSet[$i][1];
+                    $player['points']=$playersStats->resultSets[0]->rowSet[$i][29];
+                    $player['pointsRank']=$playersStats->resultSets[0]->rowSet[$i][58];
+                    $player['rebounds']=$playersStats->resultSets[0]->rowSet[$i][21];
+                    $player['reboundsRank']=$playersStats->resultSets[0]->rowSet[$i][50];
+                    $player['assists']=$playersStats->resultSets[0]->rowSet[$i][22];
+                    $player['assistsRank']=$playersStats->resultSets[0]->rowSet[$i][51];
+                    $player['turnovers']=$playersStats->resultSets[0]->rowSet[$i][23];
+                    $player['turnoversRank']=$playersStats->resultSets[0]->rowSet[$i][52];
+                    $player['steals']=$playersStats->resultSets[0]->rowSet[$i][24];
+                    $player['stealsRank']=$playersStats->resultSets[0]->rowSet[$i][53];
+                    $player['blocks']=$playersStats->resultSets[0]->rowSet[$i][25];
+                    $player['blocksRank']=$playersStats->resultSets[0]->rowSet[$i][54];
+                    $player['plusminus']=$playersStats->resultSets[0]->rowSet[$i][30];
+                    $player['plusminusRank']=$playersStats->resultSets[0]->rowSet[$i][59];
+                    $player['fg_pct']=$playersStats->resultSets[0]->rowSet[$i][12];
+                    $player['fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][41];
+
+
+
+
+
+                    array_push($players,$player);
+                }
+        }
+      
+        usort($players, function($a, $b) {
+            return $a['pointsRank'] <=> $b['pointsRank'];
+        });
+        return $players;
+    }
+
+     // Injuries : 
+    public function injury($teamId){
+        $injuredPlayers = $this->curlRequest('https://www.rotowire.com/basketball/tables/injury-report.php?team=ALL&pos=ALL');
+        $team_abv=$this -> getAbvFromId($teamId);
+        $infirmerie=[];$injury= []; 
+        for ($i=0; $i < count($injuredPlayers); $i++) { 
+            if($injuredPlayers[$i]->team ==$team_abv){
+                    $injury['player']=$injuredPlayers[$i]->player;
+                    $injury['injury']=$injuredPlayers[$i]->injury;
+                    $injury['status']=$injuredPlayers[$i]->status;
+                    array_push($infirmerie,$injury);
+            }
+        }
+        return $infirmerie;
+    }
+
+
+
+
+    public function returnStats($teamId,$teamsStats,$defTeamsStats)
+    {
+        
+        $i=0;
+        while($teamsStats->resultSets[0]->rowSet[$i][0] !=$teamId){
+            $i++;}
+        $stats['Team']=$teamsStats->resultSets[0]->rowSet[$i][1];    
+        $stats['team_abv'] = $this -> getAbvFromId($teamId);       
+        $stats['points']=$teamsStats->resultSets[0]->rowSet[$i][26];
+        $stats['pointsRank'] = $teamsStats->resultSets[0]->rowSet[$i][52];
+        $stats['rebounds']=$teamsStats->resultSets[0]->rowSet[$i][18];
+        $stats['reboundsRank'] = $teamsStats->resultSets[0]->rowSet[$i][44];
+        $stats['assists']=$teamsStats->resultSets[0]->rowSet[$i][19];
+        $stats['assistsRank'] = $teamsStats->resultSets[0]->rowSet[$i][45];
+        $stats['blocks']=$teamsStats->resultSets[0]->rowSet[$i][22];
+        $stats['blocksRank'] = $teamsStats->resultSets[0]->rowSet[$i][48];
+        $stats['steals']=$teamsStats->resultSets[0]->rowSet[$i][21];
+        $stats['stealsRank'] = $teamsStats->resultSets[0]->rowSet[$i][47];
+        $stats['fg_pct']=$teamsStats->resultSets[0]->rowSet[$i][9];
+        $stats['fg_pctRank'] = $teamsStats->resultSets[0]->rowSet[$i][35];
+        if (isset($defTeamsStats)){
+            $j=0;while($defTeamsStats->resultSets[0]->rowSet[$j][0] !=$teamId){$j++;}
+            $stats['d_fg_pct']=$defTeamsStats->resultSets[0]->rowSet[$j][8];
+            $rank=1;
+            for ($k=0; $k < count($defTeamsStats->resultSets[0]->rowSet); $k++){
+                if ($defTeamsStats->resultSets[0]->rowSet[$k][8] <= $stats['d_fg_pct']) {
+                    $rank++; }}
+            $stats['d_fg_pctRank']=$rank;
+        }
+        $stats['turnovers']=$teamsStats->resultSets[0]->rowSet[$i][20];
+        $stats['turnoversRank'] = $teamsStats->resultSets[0]->rowSet[$i][46];
+        $stats['wins'] =  $teamsStats->resultSets[0]->rowSet[$i][3];
+        $stats['losses'] = $teamsStats->resultSets[0]->rowSet[$i][4];
+        $stats['Rank'] = $teamsStats->resultSets[0]->rowSet[$i][31];
+
+        return $stats;
+    }
+
+
+   
 
 
 
@@ -142,7 +264,8 @@ class StatsManager
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-     curl_setopt($ch, CURLOPT_URL, $url);
+     curl_setopt($ch, CURLOPT_URL, $url);   
+    
      $result = curl_exec($ch);
      curl_close($ch);
      $data = json_decode($result);

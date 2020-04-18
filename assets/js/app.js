@@ -9,6 +9,41 @@
 import '../css/app.css';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import $ from 'jquery';
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+$(".stats").hide();$("#overall").show();
+$(".btn-overall").click(function(){
+  $(".stats").hide();
+  $("#overall").show();
+});
+
+  $(".btn-last5").click(function(){
+    $(".stats").hide();
+    $("#last5").show();
+  });
+
+  $(".btn-location").click(function(){
+    $(".stats").hide();
+    $("#location").show();
+  });
+
+  $(".btn-advanced").click(function(){
+    $("#overall").hide();
+    $("#last5").hide();
+    $("#location").hide();
+    $("#advanced").show();
+  });
+
+  $(".btn-players").click(function(){
+    $(".stats").hide();
+    $("#players").show();
+  });
+  $(".btn-injuries").click(function(){
+    $(".stats").hide();
+    $("#injuries").show();
+  });
+  
+  
+
+    
+console.log('Hellooo Webpack Ence! ');

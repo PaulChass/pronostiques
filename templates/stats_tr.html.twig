@@ -1,0 +1,29 @@
+<tr>
+  <th scope="row">{{title}}</th>
+  <td>{{hstat}} 
+        {% if home.pointsdiff is defined %}
+            {% if hstatRank > 0 %}
+                  <span class="text-success">({{hstatRank}})</span>
+            {% elseif  hstatRank < 0 %}   
+                  <span class="text-danger">({{hstatRank}})</span>
+            {% endif %}
+        {% elseif  hstatRank < 11 %}
+        <span class="text-success">({{hstatRank}})</span>
+        {% elseif hstatRank > 19 %}
+        <span class="text-danger">({{hstatRank}})</span>
+        {% else %}({{hstatRank}}) 
+        {% endif %}</td>
+  <td>{{astat}} 
+        {% if home.pointsdiff is defined %}
+            {% if astatRank > 0 %}
+                  <span class="text-success">({{astatRank}})</span>
+            {% elseif  astatRank < 0 %}   
+                  <span class="text-danger">({{astatRank}})</span>
+            {% endif %}
+        {% elseif astatRank < 11 %}
+        <span class="text-success">({{astatRank}})</span>
+        {% elseif astatRank > 19 %}
+        <span class="text-danger">({{astatRank}})</span>
+        {% else %}({{astatRank}}) 
+        {% endif %}
+        </td>

@@ -1,0 +1,52 @@
+<div id="{{id}}" class="stats">   
+<div class="btn-group" style="margin:10px;" role="group" aria-label="Basic example">
+  {% include 'btngroup.html.twig' with {name:'overall',btn_label:'Générales'} %}
+  {% include 'btngroup.html.twig' with {name:'last5',btn_label:'5 derniers'} %}
+  {% include 'btngroup.html.twig' with {name:'location',btn_label:'Domcile/Exterieur'} %}
+  {% include 'btngroup.html.twig' with {name:'advanced',btn_label:'Avancées'} %}
+  {% include 'btngroup.html.twig' with {name:'players',btn_label:'Joueurs'} %}
+  {% include 'btngroup.html.twig' with {name:'injuries',btn_label:'Infirmerie'} %}
+</div> 
+<table class="table table-hover table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col" style="margin-top: 50vh;transform: translateY(-25%);">{{arrayTitle}}</th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_domicile.team_abv}}_logo.svg"/></th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_exterieur.team_abv}}_logo.svg"/></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Bilan</th>
+      <td>{{home.wins}}/{{home.losses}}  
+        {% if home.pointsdiff is not defined %}
+          {% if home.Rank < 11 %}
+        <span class="text-success">({{home.Rank}})</span>
+        {% elseif home.Rank > 19 %}
+        <span class="text-danger">({{home.Rank}})</span>
+        {% else %}({{home.Rank}}) 
+        {% endif %}{% endif %}</td>
+      <td>{{away.wins}}/{{away.losses}}  
+        {% if home.pointsdiff is not defined %}
+        {% if  away.Rank < 11 %}
+        <span class="text-success">({{away.Rank}})</span>
+        {% elseif away.Rank > 19 %}
+        <span class="text-danger">({{away.Rank}})</span>
+        {% else %}({{away.Rank}}) 
+        {% endif %}{% endif %}</td>
+    </tr>
+    {% include 'stats_tr.html.twig' with {title:'Points', hstat:home.points, hstatRank:home.pointsRank, astat:away.points, astatRank: away.pointsRank} %}
+    {% include 'stats_tr.html.twig' with {title:'%Tir', hstat:home.fg_pct, hstatRank:home.fg_pctRank, astat:away.fg_pct, astatRank: away.fg_pctRank} %}
+    
+    {% include 'stats_tr.html.twig' with {title:'Rebonds', hstat:home.rebounds, hstatRank:home.reboundsRank, astat:away.rebounds, astatRank: away.reboundsRank} %}
+    {% include 'stats_tr.html.twig' with {title:'Contres', hstat:home.blocks, hstatRank:home.blocksRank, astat:away.blocks, astatRank: away.blocksRank} %}
+    {% include 'stats_tr.html.twig' with {title:'Passes Dec', hstat:home.assists, hstatRank:home.assistsRank, astat:away.assists, astatRank: away.assistsRank} %}
+    {% include 'stats_tr.html.twig' with {title:'Interceptions', hstat:home.steals, hstatRank:home.stealsRank, astat:away.steals, astatRank: away.stealsRank} %}
+    {% include 'stats_tr.html.twig' with {title:'Pertes de balle', hstat:home.turnovers, hstatRank:home.turnoversRank, astat:away.turnovers, astatRank: away.turnoversRank} %}
+    {% if home.d_fg_pct is defined %} 
+       {% include 'stats_tr.html.twig' with {title:'%Tir Adv', hstat:home.d_fg_pct, hstatRank:home.d_fg_pctRank, astat:away.d_fg_pct, astatRank: away.d_fg_pctRank} %}
+    {% endif %}
+  </tbody>
+</table>
+</div>
