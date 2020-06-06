@@ -40,13 +40,24 @@ class Game
     private $hometeamid;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="gameId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="game", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $gameId;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Team::class, mappedBy="game")
+     */
+    private $teams;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +138,49 @@ class Game
             // set the owning side to null (unless already changed)
             if ($comment->getGameId() === $this) {
                 $comment->setGameId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    public function setGameId(int $gameId): self
+    {
+        $this->gameId = $gameId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+            $team->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->contains($team)) {
+            $this->teams->removeElement($team);
+            // set the owning side to null (unless already changed)
+            if ($team->getGame() === $this) {
+                $team->setGame(null);
             }
         }
 

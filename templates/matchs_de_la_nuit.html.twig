@@ -1,20 +1,19 @@
-
-
-
 {% block body %}
     <div class="mx-auto jumbotron">
     <div class="row">
-    {% for match in matchs  %}
-        <button class="card fa" style="width:12rem;margin:1px;padding:0px;"><a href={{ path('face-a-face', {hometeam: match.HomeTeamId,awayteam: match.AwayTeamId}) }}#overall>   
-            <li class="list-group-item" style="list-style:none">
-                <img src="{{match.HomeLogoUrl}}" class="mx-auto card-img" style="max-height:4rem;"></li>
-            <li class="list-group-item" style="list-style:none">
-                <img src="{{match.AwayLogoUrl}}" class="mx-auto card-img" style="max-height:4rem;"></li>
-            <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
-                {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
-        </a>
-        </button>
-    {% endfor %}
+        {% for match in matchs  %}
+        <div class="col-md-2">
+            <button class="card fa" style="width:14rem;margin:1px;padding:0px;"><a href={{ path('face-a-face', {gameId: match.GameId}) }}#overall>   
+                <li class="list-group-item" style="list-style:none">
+                    <img src="{{match.HomeLogoUrl}}" class="mx-auto card-img" style="max-height:4rem;"></li>
+                <li class="list-group-item" style="list-style:none">
+                    <img src="{{match.AwayLogoUrl}}" class="mx-auto card-img" style="max-height:4rem;"></li>
+                <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                    {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+            </a>
+            </button>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

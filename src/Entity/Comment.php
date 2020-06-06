@@ -36,7 +36,12 @@ class Comment
      * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $gameId;
+    private $game;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $publishDate;
 
     public function getId(): ?int
     {
@@ -81,12 +86,24 @@ class Comment
 
     public function getGameId(): ?Game
     {
-        return $this->gameId;
+        return $this->game;
     }
 
-    public function setGameId(?Game $gameId): self
+    public function setGameId(?Game $game): self
     {
-        $this->gameId = $gameId;
+        $this->game = $game;
+
+        return $this;
+    }
+
+    public function getPublishDate(): ?\DateTimeInterface
+    {
+        return $this->publishDate;
+    }
+
+    public function setPublishDate(\DateTimeInterface $publishDate): self
+    {
+        $this->publishDate = $publishDate;
 
         return $this;
     }

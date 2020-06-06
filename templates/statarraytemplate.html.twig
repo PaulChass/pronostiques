@@ -1,24 +1,22 @@
-<div id="{{id}}" class="stats">   
-<div class="btn-group" style="margin:10px;" role="group" aria-label="Basic example">
+<div id="{{id}}" class="stats" style="padding: 20px;text-align: center;">   
+<div class="btn-group center-div" role="group" style="display: inline-block;padding: 20px;">
   {% include 'btngroup.html.twig' with {name:'overall',btn_label:'Générales'} %}
   {% include 'btngroup.html.twig' with {name:'last5',btn_label:'5 derniers'} %}
   {% include 'btngroup.html.twig' with {name:'location',btn_label:'Domcile/Exterieur'} %}
   {% include 'btngroup.html.twig' with {name:'advanced',btn_label:'Avancées'} %}
-  {% include 'btngroup.html.twig' with {name:'players',btn_label:'Joueurs'} %}
-  {% include 'btngroup.html.twig' with {name:'injuries',btn_label:'Infirmerie'} %}
 </div> 
 <table class="table table-hover table-dark">
 
   <thead>
     <tr>
-      <th scope="col" style="margin-top: 50vh;transform: translateY(-25%);">{{arrayTitle}}</th>
-      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_domicile.team_abv}}_logo.svg"/></th>
-      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{stats_exterieur.team_abv}}_logo.svg"/></th>
+      <th scope="col" class="left" style="margin-top: 50vh;transform: translateY(-25%);">{{arrayTitle}}</th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg"/></th>
+      <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg"/></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">Bilan</th>
+      <th scope="row" class="left">Bilan</th>
       <td>{{home.wins}}/{{home.losses}}  
         {% if home.pointsdiff is not defined %}
           {% if home.Rank < 11 %}

@@ -6,45 +6,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StatsManager 
 {
-    /**
- * Retourne la liste des matchs de la nuit NBA 
- *
- * @uses getAbvFromTeam()  
- * @uses http://www.elpauloloco.ovh/2020-03-06.json  (sauvegarde de nbastats du jour)
- *
- * 
- * @return array
- *     tableau avec noms et id des équipes à domicile et à l'exterieur ainsi que la date
- *     
-**/
-    public function MatchsDeLaNuit()
-    {
-        $response= $this->curlRequest('http://www.elpauloloco.ovh/2020-03-06.json');
-        
-        $matchsDeLaNuit=[];$match=[];
-        
-        for ($i=0; $i < count($response->resultSets[0]->rowSet) ; $i++)
-        { 
-            $match['HomeTeamId'] = $response->resultSets[0]->rowSet[$i][6] ;
-            $homeTeamAbv=$this->getAbvFromId($match['HomeTeamId']);
-            $match['HomeLogoUrl']= 'https://stats.nba.com/media/img/teams/logos/'.$homeTeamAbv.'_logo.svg';
-            
-            $match['AwayTeamId'] = $response->resultSets[0]->rowSet[$i][7];
-            $awayTeamAbv=$this->getAbvFromId($match['AwayTeamId']);
-            $match['AwayLogoUrl']= 'https://stats.nba.com/media/img/teams/logos/'.$awayTeamAbv.'_logo.svg';
-            
-            $match['GameId']= $response->resultSets[0]->rowSet[$i][7];
-            $date = substr($response->resultSets[0]->rowSet[$i][4], 0, 7);
-            $match['Time']=date('H:i', mktime(date('H', strtotime($date))+6,date('i', strtotime($date))));
-
-            array_push($matchsDeLaNuit,$match);
-        }
-        return $matchsDeLaNuit;
-    }
-
-   
-   
-
     public function CotesFaceAFace($homeId,$awayId)
     {
         $cotesParionsSport = $this->curlRequest('https://www.pointdevente.parionssport.fdj.fr/api/1n2/offre?sport=601600');
@@ -87,6 +48,7 @@ class StatsManager
         $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/TeamsStats.json');
         $defTeamsStats = $this->curlRequest('http://www.elpauloloco.ovh/DefTeamsStats.json');
         $teamStats = $this->returnStats($teamId,$teamsStats,$defTeamsStats);
+     
         return $teamStats;
     } 
     
@@ -138,6 +100,10 @@ class StatsManager
                 {
                     $player['id']=$playersStats->resultSets[0]->rowSet[$i][0];
                     $player['name']=$playersStats->resultSets[0]->rowSet[$i][1];
+                    $player['games']=$playersStats->resultSets[0]->rowSet[$i][5];
+                    $player['minutes']=$playersStats->resultSets[0]->rowSet[$i][9];
+                    $player['minutesRank']=$playersStats->resultSets[0]->rowSet[$i][38];
+
                     $player['points']=$playersStats->resultSets[0]->rowSet[$i][29];
                     $player['pointsRank']=$playersStats->resultSets[0]->rowSet[$i][58];
                     $player['rebounds']=$playersStats->resultSets[0]->rowSet[$i][21];
@@ -154,7 +120,9 @@ class StatsManager
                     $player['plusminusRank']=$playersStats->resultSets[0]->rowSet[$i][59];
                     $player['fg_pct']=$playersStats->resultSets[0]->rowSet[$i][12];
                     $player['fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][41];
-
+                    $player['three_fg_pct']=$playersStats->resultSets[0]->rowSet[$i][15];  
+                    $player['three_fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][44];    
+  
 
 
 
@@ -257,6 +225,23 @@ class StatsManager
             $i++;
         }
         return $playerStats->resultSets[0]->rowSet[$i][3];
+    }
+
+    public function last5games($id)
+    {
+        $games= $this->curlRequest('http://www.elpauloloco.ovh/teamLastGames.json');
+        $i=0;$j=0;$last5=[];
+        while($i<5)
+        {
+            if($games->resultSets[0]->rowSet[$j][1]==$id)
+            {
+                $game=$games->resultSets[0]->rowSet[$j];
+                $i++;
+                array_push($last5,$game);
+            }
+            $j++;
+        }
+        return $last5;
     }
 
     private function curlRequest($url)
