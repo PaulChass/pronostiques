@@ -28,6 +28,11 @@ class Player
      */
     private $Stats = [];
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $Stats5 = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +58,18 @@ class Player
     public function setStats(array $Stats): self
     {
         $this->Stats = $Stats;
+
+        return $this;
+    }
+
+    public function getStats5(): ?array
+    {
+        return $this->Stats5;
+    }
+
+    public function setStats5(array $Stats5): self
+    {
+        $this->Stats5 = $Stats5;
 
         return $this;
     }

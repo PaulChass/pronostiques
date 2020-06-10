@@ -47,12 +47,15 @@ class GameController extends AbstractController
             $statsLocation = $StatsManager -> locationStats($hteamid,'Home');
             $last5=$StatsManager->last5games($hteamid);
             $hteam->setLast5games($last5);
+
             $hteam->SetStatsLocation($statsLocation);
             $players= $StatsManager ->players($hteamid);
+            $players5 = $StatsManager-> players5($hteamid);
             for ($j=0; $j < count($players) ; $j++) { 
                 $player= new Player();
                 $player->setTeam($hteam);
                 $player->setStats($players[$j]);
+                if(isset($players5[$j])){$player->setStats5($players5[$j]);}
                 $entityManager->persist($player);
                 $hteam->addPlayer($player);
             }
@@ -77,10 +80,12 @@ class GameController extends AbstractController
 
 
             $players= $StatsManager ->players($ateamid);
+            $players5 = $StatsManager-> players5($ateamid);
             for ($j=0; $j < count($players) ; $j++) { 
                 $player= new Player();
                 $player->setTeam($ateam);
                 $player->setStats($players[$j]);
+                if(isset($players5[$j])){$player->setStats5($players5[$j]);}
                 $entityManager->persist($player);
                 $ateam->addPlayer($player);
             }

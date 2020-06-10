@@ -34,13 +34,15 @@ $(".btn-overall").click(function(){
     $("#advanced").show();
   });
 
-  $(".btn-players").click(function(){
-    $(".stats").hide();
-    $("#players").show();
+  $(".playerstats").hide();
+  $("#player").show();
+  $(".btn-player").click(function(){
+    $(".playerstats").hide();
+    $("#player").show();
   });
-  $(".btn-injuries").click(function(){
-    $(".stats").hide();
-    $("#injuries").show();
+  $(".btn-player5").click(function(){
+    $(".playerstats").hide();
+    $("#player5").show();
   });
   
   

@@ -38,9 +38,5 @@ a:active {
 .left{
   text-align:left;
 }
-tr{
-  display: table-cell; /* comportement visuel de cellule */
-  vertical-align: middle;
-}
 
 .small-picture{max-height:30px;}

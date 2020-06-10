@@ -93,7 +93,20 @@ class StatsManager
 
     public function players($teamId)
     {
-        $playersStats =  $this->curlRequest('http://www.elpauloloco.ovh/PlayersStats.json');
+        $players =  $this->curlRequest('http://www.elpauloloco.ovh/PlayersStats.json');
+        $playersStats= $this->returnPlayerStats($players,$teamId);
+        return $playersStats;
+    }
+
+    public function players5($teamId)
+    {
+        $players =  $this->curlRequest('http://www.elpauloloco.ovh/PlayersStats5.json');
+        $playersStats= $this->returnPlayerStats($players,$teamId);
+        return $playersStats;
+    }
+
+    public function returnPlayerStats($playersStats,$teamId)
+    {
         $players=[];$player=[];
         for ($i=0; $i < count($playersStats->resultSets[0]->rowSet) ; $i++) { 
             if ($playersStats->resultSets[0]->rowSet[$i][2]==$teamId)

@@ -1,0 +1,218 @@
+<div id="player" class="playerstats">  
+          <table class="table table-hover table-dark">
+          
+          {% include 'btngroup.html.twig' with {id: 'player',name:'player',btn_label:'Générales'} %}
+          {% include 'btngroup.html.twig' with {id:'player' ,name:'player5',btn_label:'5derniers'} %}
+           <thead>
+            <tr>
+              <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg"/></th>
+              
+              <th scope="col"> Points </th>
+              <th scope="col"> %Tir</th>
+               <th scope="col"> %3Pts</th>
+              <th scope="col"> Reb</th>
+              <th scope="col">Pd</th>
+              <th scope="col"> PdB </t  h>
+              <th scope="col"> Int </th>
+              <th scope="col"> Ctr </th>
+              <th scope="col"> +/- </th>
+              <th scope="col"> Minutes </th>
+              <th scope="col"> Matchs </th>
+
+            </tr>
+           </thead>
+           <tbody>
+          {% for joueur in joueurs_domicile %}
+              <tr>
+              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}} </td>
+              <td>{{joueur.stats.points}} 
+              {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
+              <td> {{joueur.stats.fg_pct}}
+              {% if joueur.stats.fg_pctRank < 50 %}({{joueur.stats.fg_pctRank}}){% endif %}</td>
+              <td> {{joueur.stats.three_fg_pct}}
+              {% if joueur.stats.three_fg_pctRank < 50 %}({{joueur.stats.three_fg_pctRank}}){% endif %}</td>
+              <td>{{joueur.stats.rebounds}}
+              {% if joueur.stats.reboundsRank < 50 %}({{joueur.stats.reboundsRank}}){% endif %}</td>
+              <td>{{joueur.stats.assists}}
+              {% if joueur.stats.assistsRank < 50 %}({{joueur.stats.assistsRank}}){% endif %}</td>
+              <td> {{joueur.stats.turnovers}}
+              {% if joueur.stats.turnoversRank < 50 %}({{joueur.stats.turnoversRank}}){% endif %}</td>
+              <td> {{joueur.stats.steals}}
+              {% if joueur.stats.stealsRank < 50 %}({{joueur.stats.stealsRank}}){% endif %}</td>
+              <td> {{joueur.stats.blocks}}
+              {% if joueur.stats.blocksRank < 50 %}({{joueur.stats.blocksRank}}){% endif %}</td>
+              <td> {{joueur.stats.plusminus}}{% if joueur.stats.plusminusRank < 50 %}({{joueur.stats.plusminusRank}}){% endif %}</td>
+              <td> {{joueur.stats.minutes}}{% if joueur.stats.minutesRank < 50 %}({{joueur.stats.minutesRank}}){% endif %}</td>
+              <td>{{joueur.stats.games}}</td>
+
+              
+            </tr> 
+         {% endfor %}
+         </tbody>    
+         </table>
+
+         <table class="table table-hover table-dark">
+         <thead>
+          <tr>
+            <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg"/></th>
+            <th scope="col"> Points </th>
+            <th scope="col"> %Tir</th>
+            <th scope="col"> %3pts </th>
+            <th scope="col"> Reb</th>
+            <th scope="col">Pd</th>
+            <th scope="col"> PdB </t  h>
+            <th scope="col"> Int </th>
+            <th scope="col"> Ctr </th>
+            <th scope="col"> +/- </th>  
+            <th scope="col"> Minutes </th>
+            <th scope="col"> Matchs </th>
+          </tr>
+         </thead>
+         <tbody>
+          {% for joueur in joueurs_exterieur %}
+            <tr>
+              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}}</td>
+              <td>{{joueur.stats.points}} 
+              {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
+              <td> {{joueur.stats.fg_pct}}
+              {% if joueur.stats.fg_pctRank < 50 %}({{joueur.stats.fg_pctRank}}){% endif %}</td>
+              <td> {{joueur.stats.three_fg_pct}}
+              {% if joueur.stats.three_fg_pctRank < 50 %}({{joueur.stats.three_fg_pctRank}}){% endif %}</td>
+              <td>{{joueur.stats.rebounds}}
+               
+              {% if joueur.stats.reboundsRank < 50 %}({{joueur.stats.reboundsRank}}){% endif %}</td>
+              <td>{{joueur.stats.assists}}
+              {% if joueur.stats.assistsRank < 50 %}({{joueur.stats.assistsRank}}){% endif %}</td>
+              <td> {{joueur.stats.turnovers}}
+              {% if joueur.stats.turnoversRank < 50 %}({{joueur.stats.turnoversRank}}){% endif %}</td>
+              <td> {{joueur.stats.steals}}
+              {% if joueur.stats.stealsRank < 50 %}({{joueur.stats.stealsRank}}){% endif %}</td>
+              <td> {{joueur.stats.blocks}}
+              {% if joueur.stats.blocksRank < 50 %}({{joueur.stats.blocksRank}}){% endif %}</td>
+              <td> {{joueur.stats.plusminus}}{% if joueur.stats.plusminusRank < 50 %}({{joueur.stats.plusminusRank}}){% endif %}</td>      
+               <td> {{joueur.stats.minutes}}{% if joueur.stats.minutesRank < 50 %}({{joueur.stats.minutesRank}}){% endif %}</td>
+              <td>{{joueur.stats.games}}</td>
+            </tr> 
+          {% endfor %}
+         </tbody>
+         </table>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="player5" class="playerstats">  
+   {% include 'btngroup.html.twig' with {id: 'player5',name:'player',btn_label:'Générales'} %}
+          {% include 'btngroup.html.twig' with {id:'player5' ,name:'player5',btn_label:'5derniers'} %}
+         
+          <table class="table table-hover table-dark">
+           <thead>
+            <tr>
+              <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.stats.team_abv}}_logo.svg"/></th>
+              <th scope="col"> Points </th>
+              <th scope="col"> %Tir</th>
+               <th scope="col"> %3Pts</th>
+              <th scope="col"> Reb</th>
+              <th scope="col">Pd</th>
+              <th scope="col"> PdB </t  h>
+              <th scope="col"> Int </th>
+              <th scope="col"> Ctr </th>
+              <th scope="col"> +/- </th>
+              <th scope="col"> Minutes </th>
+              <th scope="col"> Matchs </th>
+            </tr>
+           </thead>
+           <tbody>
+          {% for joueur in joueurs_domicile %}
+          {% if joueur.stats5 is not null and joueur.stats5 is not empty %}
+              <tr>
+              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats5.id}}.png"/>{{joueur.stats5.name}} </td>
+              <td>{{joueur.stats5.points}} 
+              {% if joueur.stats5.pointsRank < 50 %}({{joueur.stats5.pointsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.fg_pct}}
+              {% if joueur.stats5.fg_pctRank < 50 %}({{joueur.stats5.fg_pctRank}}){% endif %}</td>
+              <td> {{joueur.stats5.three_fg_pct}}
+              {% if joueur.stats5.three_fg_pctRank < 50 %}({{joueur.stats5.three_fg_pctRank}}){% endif %}</td>
+              <td>{{joueur.stats5.rebounds}}
+              {% if joueur.stats5.reboundsRank < 50 %}({{joueur.stats5.reboundsRank}}){% endif %}</td>
+              <td>{{joueur.stats5.assists}}
+              {% if joueur.stats5.assistsRank < 50 %}({{joueur.stats5.assistsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.turnovers}}
+              {% if joueur.stats5.turnoversRank < 50 %}({{joueur.stats5.turnoversRank}}){% endif %}</td>
+              <td> {{joueur.stats5.steals}}
+              {% if joueur.stats5.stealsRank < 50 %}({{joueur.stats5.stealsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.blocks}}
+              {% if joueur.stats5.blocksRank < 50 %}({{joueur.stats5.blocksRank}}){% endif %}</td>
+              <td> {{joueur.stats5.plusminus}}{% if joueur.stats5.plusminusRank < 50 %}({{joueur.stats5.plusminusRank}}){% endif %}</td>
+              <td> {{joueur.stats5.minutes}}{% if joueur.stats5.minutesRank < 50 %}({{joueur.stats5.minutesRank}}){% endif %}</td>
+              <td>{{joueur.stats5.games}}</td>
+            </tr> 
+          {% endif %}
+         {% endfor %}
+         </tbody>    
+         </table>
+
+         <table class="table table-hover table-dark">
+         <thead>
+          <tr>
+            <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.stats.team_abv}}_logo.svg"/></th>
+            <th scope="col"> Points </th>
+            <th scope="col"> %Tir</th>
+            <th scope="col"> %3pts </th>
+            <th scope="col"> Reb</th>
+            <th scope="col">Pd</th>
+            <th scope="col"> PdB </t  h>
+            <th scope="col"> Int </th>
+            <th scope="col"> Ctr </th>
+            <th scope="col"> +/- </th>  
+            <th scope="col"> Minutes </th>
+            <th scope="col"> Matchs </th>
+          </tr>
+         </thead>
+         <tbody>
+          {% for joueur in joueurs_exterieur %}
+          {% if joueur.stats5 is not null and joueur.stats5 is not empty %}
+
+            <tr>
+              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats5.id}}.png"/>{{joueur.stats5.name}}</td>
+              <td>{{joueur.stats5.points}} 
+              {% if joueur.stats5.pointsRank < 50 %}({{joueur.stats5.pointsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.fg_pct}}
+              {% if joueur.stats5.fg_pctRank < 50 %}({{joueur.stats5.fg_pctRank}}){% endif %}</td>
+              <td> {{joueur.stats5.three_fg_pct}}
+              {% if joueur.stats5.three_fg_pctRank < 50 %}({{joueur.stats5.three_fg_pctRank}}){% endif %}</td>
+              <td>{{joueur.stats5.rebounds}}
+               
+              {% if joueur.stats5.reboundsRank < 50 %}({{joueur.stats5.reboundsRank}}){% endif %}</td>
+              <td>{{joueur.stats5.assists}}
+              {% if joueur.stats5.assistsRank < 50 %}({{joueur.stats5.assistsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.turnovers}}
+              {% if joueur.stats5.turnoversRank < 50 %}({{joueur.stats5.turnoversRank}}){% endif %}</td>
+              <td> {{joueur.stats5.steals}}
+              {% if joueur.stats5.stealsRank < 50 %}({{joueur.stats5.stealsRank}}){% endif %}</td>
+              <td> {{joueur.stats5.blocks}}
+              {% if joueur.stats5.blocksRank < 50 %}({{joueur.stats5.blocksRank}}){% endif %}</td>
+              <td> {{joueur.stats5.plusminus}}{% if joueur.stats5.plusminusRank < 50 %}({{joueur.stats5.plusminusRank}}){% endif %}</td>      
+               <td> {{joueur.stats5.minutes}}{% if joueur.stats5.minutesRank < 50 %}({{joueur.stats5.minutesRank}}){% endif %}</td>
+              <td>{{joueur.stats5.games}}</td>
+            </tr> 
+            {% endif %}
+          {% endfor %}
+         </tbody>
+         </table>
+</div>

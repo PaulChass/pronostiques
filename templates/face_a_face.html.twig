@@ -26,16 +26,14 @@
           <option>5</option>
         </select>
       </div>
-    <section>
-     <h3> Stats des équipes </h3>
-     
-       
+      <div>
+      <h3> Stats des équipes </h3>
         {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
         {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Equipe 5 derniers ( différence )'} %}
         {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
-    </section>
+      </div>
 
-    <section> 
+      <div> 
       <h3>5 derniers matchs</h3>
       <div class="row">
         <div class="col">
@@ -51,106 +49,11 @@
       {% endfor %}
         </div>
       </div>
- {{ dump(teams.0.last5games.0)   }}
+      {{ dump(teams.0.last5games.0)   }}
       <h3> Stats des Joueurs </h3>
-        <div id="player" class="playerstats">  
-          <table class="table table-hover table-dark">
-           <thead>
-            <tr>
-              <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg"/></th>
-              
-              <th scope="col"> Points </th>
-              <th scope="col"> %Tir</th>
-               <th scope="col"> %3Pts</th>
-              <th scope="col"> Reb</th>
-              <th scope="col">Pd</th>
-              <th scope="col"> PdB </t  h>
-              <th scope="col"> Int </th>
-              <th scope="col"> Ctr </th>
-              <th scope="col"> +/- </th>
-              <th scope="col"> Minutes </th>
-              <th scope="col"> Matchs </th>
-
-            </tr>
-           </thead>
-           <tbody>
-          {% for joueur in joueurs_domicile %}
-              <tr>
-              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}} </td>
-              <td>{{joueur.stats.points}} 
-              {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
-              <td> {{joueur.stats.fg_pct}}
-              {% if joueur.stats.fg_pctRank < 50 %}({{joueur.stats.fg_pctRank}}){% endif %}</td>
-              <td> {{joueur.stats.three_fg_pct}}
-              {% if joueur.stats.three_fg_pctRank < 50 %}({{joueur.stats.three_fg_pctRank}}){% endif %}</td>
-              <td>{{joueur.stats.rebounds}}
-              {% if joueur.stats.reboundsRank < 50 %}({{joueur.stats.reboundsRank}}){% endif %}</td>
-              <td>{{joueur.stats.assists}}
-              {% if joueur.stats.assistsRank < 50 %}({{joueur.stats.assistsRank}}){% endif %}</td>
-              <td> {{joueur.stats.turnovers}}
-              {% if joueur.stats.turnoversRank < 50 %}({{joueur.stats.turnoversRank}}){% endif %}</td>
-              <td> {{joueur.stats.steals}}
-              {% if joueur.stats.stealsRank < 50 %}({{joueur.stats.stealsRank}}){% endif %}</td>
-              <td> {{joueur.stats.blocks}}
-              {% if joueur.stats.blocksRank < 50 %}({{joueur.stats.blocksRank}}){% endif %}</td>
-              <td> {{joueur.stats.plusminus}}{% if joueur.stats.plusminusRank < 50 %}({{joueur.stats.plusminusRank}}){% endif %}</td>
-              <td> {{joueur.stats.minutes}}{% if joueur.stats.minutesRank < 50 %}({{joueur.stats.minutesRank}}){% endif %}</td>
-              <td>{{joueur.stats.games}}</td>
-
-              
-            </tr> 
-         {% endfor %}
-         </tbody>    
-         </table>
-
-         <table class="table table-hover table-dark">
-         <thead>
-          <tr>
-            <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg"/></th>
-            <th scope="col"> Points </th>
-            <th scope="col"> %Tir</th>
-            <th scope="col"> %3pts </th>
-            <th scope="col"> Reb</th>
-            <th scope="col">Pd</th>
-            <th scope="col"> PdB </t  h>
-            <th scope="col"> Int </th>
-            <th scope="col"> Ctr </th>
-            <th scope="col"> +/- </th>  
-            <th scope="col"> Minutes </th>
-            <th scope="col"> Matchs </th>
-          </tr>
-         </thead>
-         <tbody>
-          {% for joueur in joueurs_exterieur %}
-            <tr>
-              <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}}</td>
-              <td>{{joueur.stats.points}} 
-              {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
-              <td> {{joueur.stats.fg_pct}}
-              {% if joueur.stats.fg_pctRank < 50 %}({{joueur.stats.fg_pctRank}}){% endif %}</td>
-              <td> {{joueur.stats.three_fg_pct}}
-              {% if joueur.stats.three_fg_pctRank < 50 %}({{joueur.stats.three_fg_pctRank}}){% endif %}</td>
-              <td>{{joueur.stats.rebounds}}
-               
-              {% if joueur.stats.reboundsRank < 50 %}({{joueur.stats.reboundsRank}}){% endif %}</td>
-              <td>{{joueur.stats.assists}}
-              {% if joueur.stats.assistsRank < 50 %}({{joueur.stats.assistsRank}}){% endif %}</td>
-              <td> {{joueur.stats.turnovers}}
-              {% if joueur.stats.turnoversRank < 50 %}({{joueur.stats.turnoversRank}}){% endif %}</td>
-              <td> {{joueur.stats.steals}}
-              {% if joueur.stats.stealsRank < 50 %}({{joueur.stats.stealsRank}}){% endif %}</td>
-              <td> {{joueur.stats.blocks}}
-              {% if joueur.stats.blocksRank < 50 %}({{joueur.stats.blocksRank}}){% endif %}</td>
-              <td> {{joueur.stats.plusminus}}{% if joueur.stats.plusminusRank < 50 %}({{joueur.stats.plusminusRank}}){% endif %}</td>      
-               <td> {{joueur.stats.minutes}}{% if joueur.stats.minutesRank < 50 %}({{joueur.stats.minutesRank}}){% endif %}</td>
-              <td>{{joueur.stats.games}}</td>
-            </tr> 
-          {% endfor %}
-         </tbody>
-         </table>
-        </div>
-          <h3> Infirmerie </h3>
-        <div id="injuredplayers" class="injuries">   
+      {% include 'playerstats.html.twig' %}
+      <h3> Infirmerie </h3>
+      <div id="injuredplayers" class="injuries">   
           
           <table class="table table-hover table-dark">
             <thead>
@@ -191,20 +94,21 @@
 
             </tbody>
           </table>
-        </div>
+      </div>
 
-        <h3> Highlights de la dernière rencontre </h3>
-        <div class="youtube-player center-div">
+      <h3> Highlights de la dernière rencontre </h3>
+      <div class="youtube-player center-div">
           <figure style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 0px;">
           <iframe src="https://www.youtube.com/embed/{{link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
           </figure>
-        </div>
+      </div>
 
-         <div> <img src="data:image/png;base64, {{ graph }}" /></div>
+      <div> <img src="data:image/png;base64, {{ graph }}" />
+      </div>
         
-        <h3> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
+      <h3> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
 
-        <div class="container">
+      <div class="container">
             <div class="row">
               <div class="col-md-8">
                 <div class="page-header">
@@ -224,19 +128,20 @@
                             
                             <p><small><a href="">Like</a> </small></p>
                           </div>
-                        </div>
+                    </div>
                   {% endfor %}
                 </div>
               </div>
             </div>
-          </div>
+      </div>
 
         
         
         
-        <div class="container">
+      <div class="container">
         {{ form(form) }}
-        </div>
+      </div>
+    </div>
     </div>
 
     <div class="col-md-2">
