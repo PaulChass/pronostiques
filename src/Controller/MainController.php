@@ -61,12 +61,14 @@ class MainController extends AbstractController
 
 $hname = str_replace(' ', '+', $teams[0]->getStats()['Team']);
 $aname = str_replace(' ', '+', $teams[1]->getStats()['Team']);  
-$url = file_get_contents('https://www.youtube.com/results?search_query=Recap+'.$hname.'+VS+'.$aname.'+Full+Game+Highlights'); // Ont récupere tout le code xhtml de la page.
-preg_match_all('`<a href="([^>]+)">[^<]+</a>`',$url,$liens); // Ont recherche tout les liens présent sur la page.
-$count = count($liens[1]); // Nombre de liens trouvé
-if($count>0){
-    $link=substr($liens[1][1],9);
-    $link=substr($link, 0, 11);}else{$link="";}
+//$url = file_get_contents('https://www.youtube.com/results?search_query=Recap+'.$hname.'+VS+'.$aname.'+Full+Game+Highlights'); // Ont récupere tout le code xhtml de la page.
+//preg_match_all('`<a href="([^>]+)">[^<]+</a>`',$url,$liens); // Ont recherche tout les liens présent sur la page.
+//$count = count($liens[1]); // Nombre de liens trouvé
+//if($count>0){
+    // $link=substr($liens[1][1],9);
+    //$link=substr($link, 0, 11);}else{
+        $link="";
+    //}
 
         
 $titles=array('Points','%TirAdv','Rebonds','Contres','Interceptions','Pdb','Passes','%Tir');

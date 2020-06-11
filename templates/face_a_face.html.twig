@@ -36,20 +36,52 @@
       <div> 
       <h3>5 derniers matchs</h3>
       <div class="row">
-        <div class="col">
-      {% for game in teams.0.last5games %}
-      <span class="row">{{ game[6] }}</span>
-      <span class="row">{{ game[26]}}/{{ game[26] - game[27] }} </span>
-      {% endfor %}
+        <div class="col col-md-6">
+        {% for game in teams.0.last5games %}
+          <table class="table">
+          {% if game[6][4:1] == '@' %}
+            {% set abv = game[6]|split(' @ ')%}
+            {% set at = '@' %}
+            {% else %}
+            {% set abv = game[6]|split(' vs. ') %}
+            {% set at = 'vs.' %}
+            {% endif %}
+             <tr style="justify-content:space-between; paddin-top:8rem; background:lightgrey;  ">
+            <td>
+            <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
+            </td><td style="position:relative;top:1rem;">{{ at }}</td>
+            <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
+            </td>
+        <td><h5 class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}</h5>  
+          </tr></td>
+          </table>
+        {% endfor %}
         </div>
+       
+        
         <div class="col">
-      {% for game in teams.1.last5games %}
-      <span class="row">{{ game[6] }}</span>
-      <span class="row">{{ game[26]}}/{{ game[26] - game[27] }} </span>
-      {% endfor %}
+       {% for game in teams.1.last5games %}
+          <table class="table">
+          
+          {% if game[6][4:1] == '@' %}
+            {% set abv = game[6]|split(' @ ')%}
+            {% set at = '@' %}
+            {% else %}
+            {% set abv = game[6]|split(' vs. ') %}
+            {% set at = 'vs.' %}
+            {% endif %}
+            <tr style="justify-content:space-between; paddin-top:8rem; background:lightgrey;  ">
+            <td>
+            <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
+            </td><td style="position:relative;top:1rem;">{{ at }}</td>
+            <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
+            </td>
+        <td><h5 class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}</h5>  
+          </tr></td>
+          </table>
+        {% endfor %}
         </div>
       </div>
-      {{ dump(teams.0.last5games.0)   }}
       <h3> Stats des Joueurs </h3>
       {% include 'playerstats.html.twig' %}
       <h3> Infirmerie </h3>
