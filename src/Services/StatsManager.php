@@ -150,6 +150,44 @@ class StatsManager
         return $players;
     }
 
+
+    public function twitter($teamId){
+        $team_abv=$this -> getAbvFromId($teamId);
+        $leagueTwitters=[
+            'CHI'=>'https://twitter.com/chicagobulls?s=20',
+            'IND'=>'https://twitter.com/Pacers?s=20',
+            'NOP'=>'https://twitter.com/PelicansNBA?s=20',
+            'MIA'=>'https://twitter.com/MiamiHEAT?s=20',
+            'ORL'=>'https://twitter.com/OrlandoMagic?s=20',
+            'MIL'=>'https://twitter.com/Bucks?s=20',
+            'MIN'=>'https://twitter.com/Timberwolves?s=20',
+            'DAL'=>'https://twitter.com/dallasmavs?s=20',
+            'LAL'=>'https://twitter.com/Lakers?s=20',
+            'LAC'=>'https://twitter.com/laclippers',
+            'CHA'=>'https://twitter.com/hornets?s=20',
+            'WAS'=>'https://twitter.com/WashWizards?s=20',
+            'OKC'=>'https://twitter.com/okcthunder?s=20',
+            'NYK'=>'https://twitter.com/nyknicks?s=20',
+            'DET'=>'https://twitter.com/DetroitPistons?s=20',
+            'UTA'=>'https://twitter.com/utahjazz?s=20',
+            'BOS'=>'https://twitter.com/celtics?s=20',
+            'ATL'=>'https://twitter.com/ATLHawks?s=20',
+            'SAS'=>'https://twitter.com/spurs?s=20',
+            'PHI'=>'https://twitter.com/sixers?s=20',
+            'BKN'=>'https://twitter.com/BrooklynNets?s=20',
+            'CLE'=>'https://twitter.com/cavs?s=20',
+            'TOR'=>'https://twitter.com/Raptors?s=20',
+            'MEM'=>'https://twitter.com/memgrizz?s=20',
+            'POR'=>'https://twitter.com/trailblazers?s=20',
+            'PHX'=>'https://twitter.com/Suns?s=20',
+            'GSW'=>'https://twitter.com/warriors?s=20',
+            'SAC'=>'https://twitter.com/SacramentoKings?s=20',
+            'HOU'=>'https://twitter.com/HoustonRockets?s=20',
+            'DEN'=>'https://twitter.com/nuggets?s=20'
+        ];
+        $twitter=$leagueTwitters[$team_abv];
+        return $twitter;
+    }
      // Injuries : 
     public function injury($teamId){
         $injuredPlayers = $this->curlRequest('https://www.rotowire.com/basketball/tables/injury-report.php?team=ALL&pos=ALL');
@@ -256,6 +294,26 @@ class StatsManager
         }
         return $last5;
     }
+    public function playerLast5games($id,$playerId)
+    {   
+        $games= $this->curlRequest('http://www.elpauloloco.ovh/playerLastGames.json');
+        $i=0;$j=0;$last5=[];
+        while($i<5 && $j<count($games->resultSets[0]->rowSet))
+        {
+        if($games->resultSets[0]->rowSet[$j][3]==$id )
+                {   
+                    if($games->resultSets[0]->rowSet[$j][1]==$playerId)
+                    {
+                    $game=$games->resultSets[0]->rowSet[$j];
+                    $i++;
+                    array_push($last5,$game);
+                    }
+                }
+                $j++;
+            }
+        return $last5;
+    }
+
 
     private function curlRequest($url)
     {

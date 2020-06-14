@@ -40,6 +40,8 @@ class GameController extends AbstractController
             $hteam->setLastUpdate(new \DateTime());
             $injury=$StatsManager->injury($hteamid);
             $hteam->setInjuries($injury);
+            $twitter=$StatsManager->twitter($hteamid);
+            $hteam->setTwitter($twitter);
             $stats=$StatsManager->teamStats($hteamid);
             $hteam->setStats($stats);
             $stats5 = $StatsManager -> teamStats5($hteamid);
@@ -53,8 +55,12 @@ class GameController extends AbstractController
             $players5 = $StatsManager-> players5($hteamid);
             for ($j=0; $j < count($players) ; $j++) { 
                 $player= new Player();
+                if ($j<3) {
+                    $playerLast5= $StatsManager->playerLast5Games($hteamid,$players5[$j]['id']);
+                } 
                 $player->setTeam($hteam);
                 $player->setStats($players[$j]);
+                if(isset($playerLast5)){$player->setLast5Games($playerLast5);}
                 if(isset($players5[$j])){$player->setStats5($players5[$j]);}
                 $entityManager->persist($player);
                 $hteam->addPlayer($player);
@@ -69,6 +75,8 @@ class GameController extends AbstractController
             $ateam->setLastUpdate(new \DateTime());
             $injury=$StatsManager->injury($ateamid);
             $ateam->setInjuries($injury);
+            $twitter=$StatsManager->twitter($ateamid);
+            $ateam->setTwitter($twitter);
             $stats=$StatsManager->teamStats($ateamid);
             $ateam->setStats($stats);
             $stats5 = $StatsManager -> teamStats5($ateamid);
@@ -83,8 +91,12 @@ class GameController extends AbstractController
             $players5 = $StatsManager-> players5($ateamid);
             for ($j=0; $j < count($players) ; $j++) { 
                 $player= new Player();
+                if($j<3) {
+                        $playerLast5= $StatsManager->playerLast5Games($ateamid,$players5[$j]['id']);
+                }
                 $player->setTeam($ateam);
                 $player->setStats($players[$j]);
+                if(isset($playerLast5)){$player->setLast5Games($playerLast5);}
                 if(isset($players5[$j])){$player->setStats5($players5[$j]);}
                 $entityManager->persist($player);
                 $ateam->addPlayer($player);

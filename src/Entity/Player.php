@@ -33,6 +33,11 @@ class Player
      */
     private $Stats5 = [];
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $last5Games = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +75,18 @@ class Player
     public function setStats5(array $Stats5): self
     {
         $this->Stats5 = $Stats5;
+
+        return $this;
+    }
+
+    public function getLast5Games(): ?array
+    {
+        return $this->last5Games;
+    }
+
+    public function setLast5Games(?array $last5Games): self
+    {
+        $this->last5Games = $last5Games;
 
         return $this;
     }

@@ -7,14 +7,39 @@
 
 {% block body %}
 {% include 'matchs_de_la_nuit.html.twig' %}
+<div class="container mb-1" id="comparaison"style="width:500px;">
+  <nav class="navbar navbar-expand-lg justify-content-around navbar-dark bg-secondary">  
+    <form class="form-inline">
+      
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="basicExampleNav" >
+
+      <ul class="navbar-nav d-flex justify-content-center" >
+        <li class="nav-item active  col-8">
+          <a class="nav-link" href="#">Matchs de la nuit
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item  col-8">
+          <a class="nav-link" href="#">Mes Paris  </a>
+        </li>
+      </ul>
+    </div>
+    </form>
+  </nav>
+</div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2">
-      <a class="twitter-timeline" href="https://twitter.com/chicagobulls?s=20">A Twitter List by TwitterDev</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
+    
 
-    <div class="col-md-8">
+    <div class="col-ld-8 col-md-12 order-2">
       <h3> Cotes </h3>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Pari </label>
@@ -33,12 +58,12 @@
         {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
       </div>
 
-      <div> 
-      <h3>5 derniers matchs</h3>
+      <div class="" > 
+      <h3>Tendances 5 derniers matchs</h3>
       <div class="row">
         <div class="col col-md-6">
         {% for game in teams.0.last5games %}
-          <table class="table">
+         <table class="table table-dark">
           {% if game[6][4:1] == '@' %}
             {% set abv = game[6]|split(' @ ')%}
             {% set at = '@' %}
@@ -46,22 +71,23 @@
             {% set abv = game[6]|split(' vs. ') %}
             {% set at = 'vs.' %}
             {% endif %}
-             <tr style="justify-content:space-between; paddin-top:8rem; background:lightgrey;  ">
-            <td>
-            <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
-            </td><td style="position:relative;top:1rem;">{{ at }}</td>
-            <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
-            </td>
-        <td><h5 class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}</h5>  
-          </tr></td>
-          </table>
+             <tr style="justify-content:space-around; paddin-top:8rem; ">
+              <td>
+              <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
+              </td><td style="position:relative;top:1rem;">{{ at }}</td>
+              <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
+              </td>
+              <td class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
+              </td>
+             </tr>
+         </table>
         {% endfor %}
         </div>
        
         
         <div class="col">
        {% for game in teams.1.last5games %}
-          <table class="table">
+          <table class="table table-dark">
           
           {% if game[6][4:1] == '@' %}
             {% set abv = game[6]|split(' @ ')%}
@@ -70,20 +96,31 @@
             {% set abv = game[6]|split(' vs. ') %}
             {% set at = 'vs.' %}
             {% endif %}
-            <tr style="justify-content:space-between; paddin-top:8rem; background:lightgrey;  ">
-            <td>
-            <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
-            </td><td style="position:relative;top:1rem;">{{ at }}</td>
-            <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
-            </td>
-        <td><h5 class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}</h5>  
-          </tr></td>
+            <tr style="justify-content:space-between; paddin-top:8rem;">
+              <td>
+              <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
+              </td><td style="position:relative;top:1rem;">{{ at }}</td>
+              <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
+              </td>
+              <td  class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
+              </td>
+            </tr>
           </table>
         {% endfor %}
         </div>
       </div>
+      
+      <div class="row" >
+        <div class="col-6 mx-auto">
+         <img style="opacity:0.65"src="data:image/png;base64, {{ graph.0 }}" /></div>
+        <div class="col-6 mx-auto">
+      <img  style="opacity:0.65" src="data:image/png;base64, {{ graph.1 }}" /> </div>
+      </div>
+
       <h3> Stats des Joueurs </h3>
+      <div class="container">
       {% include 'playerstats.html.twig' %}
+      </div>
       <h3> Infirmerie </h3>
       <div id="injuredplayers" class="injuries">   
           
@@ -135,8 +172,7 @@
           </figure>
       </div>
 
-      <div> <img src="data:image/png;base64, {{ graph }}" />
-      </div>
+      
         
       <h3> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
 
@@ -151,7 +187,7 @@
                     <div class="media">
                         <p class="pull-right"><small>{{ comment.PublishDate|date("m/d/Y") }}</small></p>
                           <a class="media-left" href="#">
-                            <img src="http://lorempixel.com/40/40/people/1/">
+                            <img src="http://lorempixel.com/40/40/people/{{random(3)}}/">
                           </a>
                           <div class="media-body">
                               
@@ -175,9 +211,12 @@
       </div>
     </div>
     </div>
-
-    <div class="col-md-2">
-      <a class="twitter-timeline" href="https://twitter.com/chicagobulls?s=20">A Twitter List by TwitterDev</a>
+    <div class="col-ld-2 order-first order-sd-2 order-md-2 col-md-6 ">
+      <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent">Twitter</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="col-ld-2 col-md-6 order-3">
+      <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent">Twitter</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
 

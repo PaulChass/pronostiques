@@ -40,6 +40,28 @@ class MatchsDeLaNuit
         }
         return $matchsDeLaNuit;
     }
+    private function curl_get_contents($url)
+{
+  $ch = curl_init($url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+    public function getlink($hname,$aname)
+    {
+        $url = $this->curl_get_contents('https://www.youtube.com/results?search_query=Recap+'.$hname.'+VS+'.$aname.'+Full+Game+Highlights'); // Ont récupere tout le code xhtml de la page.
+        preg_match_all('`<a href="([^>]+)">[^<]+</a>`',$url,$liens);
+         // Ont recherche tout les liens présent sur la page.
+        $count = count($liens[0]); // Nombre de liens trouv
+        if($count>0){
+        $link=substr($liens[0][1],18);
+        $link=substr($link, 0, 11); return $link;}
+        $link="";return($link);
+    }
 
     private function curlRequest($url)
     {
