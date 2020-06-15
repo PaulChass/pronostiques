@@ -109,18 +109,15 @@
         {% endfor %}
         </div>
       </div>
-      
-      <div class="row" >
-        <div class="col-6 mx-auto">
-         <img style="opacity:0.65"src="data:image/png;base64, {{ graph.0 }}" /></div>
-        <div class="col-6 mx-auto">
+      <div class="row d-flex justify-content-around flex-row">
+        <div class="p-6 mx-auto">
+         <img style="opacity:0.65;display:block"src="data:image/png;base64, {{ graph.0 }}" /></div>
+        <div class="p-6 mx-auto" >
       <img  style="opacity:0.65" src="data:image/png;base64, {{ graph.1 }}" /> </div>
       </div>
-
+      
       <h3> Stats des Joueurs </h3>
-      <div class="container">
       {% include 'playerstats.html.twig' %}
-      </div>
       <h3> Infirmerie </h3>
       <div id="injuredplayers" class="injuries">   
           
