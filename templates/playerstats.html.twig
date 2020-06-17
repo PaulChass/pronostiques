@@ -2,17 +2,16 @@
 <div id="player" class="playerstats " style="text-align:center;width:100%;">   
     <div class="btn-group center-div" role="group" style="display: inline-block;padding:20px;">
      {% include 'btngroup.html.twig' with {id: 'player',name:'player',btn_label:'Générales'} %}
-          {% include 'btngroup.html.twig' with {id:'player' ,name:'player5',btn_label:'5derniers'} %}
+          {% include 'btngroup.html.twig' with {id:'player' ,name:'player5',btn_label:'5 Derniers'} %}
     </div>  
-    <table class="table table-hover table-dark">
+    <table class="table table-hover table-dark" style="text-align:left;">
     
       <thead>
       <tr syle="">
         <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg"/></th>
-        
         <th scope="col"> Pts </th>
         <th scope="col"> %Tir</th>
-          <th scope="col"> %3Pts</th>
+        <th scope="col"> %3Pts</th>
         <th scope="col"> Reb</th>
         <th scope="col">Pd</th>
         <th scope="col"> PdB </t  h>
@@ -54,7 +53,7 @@
     </tbody>    
     </table>
 
-    <table class="table table-hover table-dark">
+    <table class="table table-hover table-dark"  style="text-align:left;">
     <thead>
     <tr>
       <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg"/></th>
@@ -113,7 +112,7 @@
           {% include 'btngroup.html.twig' with {id:'player5' ,name:'player5',btn_label:'5derniers'} %}
          </div>
          <div>
-          <table class="table table-hover table-dark">
+          <table class="table table-hover table-dark" style="text-align:left;">
            <thead>
             <tr>
               <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.stats.team_abv}}_logo.svg"/></th>
@@ -126,7 +125,7 @@
               <th scope="col"> Int </th>
               <th scope="col"> Ctr </th>
               <th scope="col"> +/- </th>
-              <th scope="col"> Minutes </th>
+              <th scope="col"> Min </th>
               <th scope="col"> Matchs </th>
             </tr>
            </thead>

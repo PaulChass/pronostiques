@@ -35,6 +35,8 @@ for ($i=0; $i < 3; $i++) {
 $graph = new Graph(360,240);
 $graph->SetMarginColor('white');
 $graph->SetScale("textlin");
+$graph->title->Set('Points sur les 5 derniers matchs');
+$graph->title->SetColor('navy');
 $graph->SetFrame(false);
 $graph->SetMargin(30,5,25,5);
  

@@ -7,9 +7,10 @@
 
 {% block body %}
 {% include 'matchs_de_la_nuit.html.twig' %}
-<div class="container mb-1" id="comparaison"style="width:500px;">
-  <nav class="navbar navbar-expand-lg justify-content-around navbar-dark bg-secondary">  
-    <form class="form-inline">
+
+<div class="container mb-1" id="comparaison">
+  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark  "  style:"">  
+    <form class="form-inline" style="width:100%">
       
 
     <!-- Collapse button -->
@@ -19,51 +20,78 @@
     </button>
 
     <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="basicExampleNav" >
+    <div class="collapse navbar-collapse d-flex justify-content-center " style=""  id="basicExampleNav" >
 
-      <ul class="navbar-nav d-flex justify-content-center" >
-        <li class="nav-item active  col-8">
-          <a class="nav-link" href="#">Matchs de la nuit
+      <ul class="navbar-nav d-flex justify-content-between " style="width:100%;" >
+        <li class="nav-item active">
+          <a class="nav-link" href="#equipes">Stats équipes
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li class="nav-item  col-8">
-          <a class="nav-link" href="#">Mes Paris  </a>
+          <li class="nav-item ">
+          <a class="nav-link" href="#tendances">Tendances
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+          <li class="nav-itemk">
+          <a class="nav-link" href="#joueurs">Stats joueurs
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+         <li class="nav-item ">
+          <a class="nav-link" href="#blessures">Infirmerie
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#pronostiques">Pronostiques
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" href="#">Mes Paris(TO DO)  </a>
         </li>
       </ul>
     </div>
     </form>
   </nav>
 </div>
+
 <div class="container-fluid">
   <div class="row">
-    
-
-    <div class="col-ld-8 col-md-12 order-2">
-      <h3> Cotes </h3>
+   <div class="col-2 order-first col-sd-6 ">
+      <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent" data-tweet-limit="12">Twitter</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="col-2 order-3 col-sd-6">
+      <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent" data-tweet-limit="12">Twitter</a>
+      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="col-8 col-sd-12 order-2">
+      <h3  class="whitetitle"> Cotes </h3>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Pari </label>
         <select class="form-control" id="exampleFormControlSelect1">
           <option>Face a Face</option>
           <option></option>
           <option>3</option>
-          <option>4</option>
+          <option>3</option>
           <option>5</option>
         </select>
       </div>
       <div>
-      <h3> Stats des équipes </h3>
+      <h3 id="equipes" class="whitetitle"> Stats des équipes </h3>
         {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
-        {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Equipe 5 derniers ( différence )'} %}
+        {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Equipe 5 Derniers ( différence )'} %}
         {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
       </div>
 
       <div class="" > 
-      <h3>Tendances 5 derniers matchs</h3>
+      <h3 id="tendances" class="whitetitle">Tendances 5 derniers matchs</h3>
       <div class="row">
         <div class="col col-md-6">
         {% for game in teams.0.last5games %}
-         <table class="table table-dark">
+         <table class="table table-dark " style="opacity:0.9">
           {% if game[6][4:1] == '@' %}
             {% set abv = game[6]|split(' @ ')%}
             {% set at = '@' %}
@@ -71,13 +99,13 @@
             {% set abv = game[6]|split(' vs. ') %}
             {% set at = 'vs.' %}
             {% endif %}
-             <tr style="justify-content:space-around; paddin-top:8rem; ">
+             <tr style="justify-content:between; paddin-top:8rem; ">
               <td>
               <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
-              </td><td style="position:relative;top:1rem;">{{ at }}</td>
+              </td><td style="position:relative;top:1rem;size:2rem;">{{ at }}</td>
               <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
               </td>
-              <td class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
+              <td class="card-title result " style="position:relative;{% if game[7]=='L'%}color:red;{% else %}color:lightgreen;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
               </td>
              </tr>
          </table>
@@ -99,10 +127,10 @@
             <tr style="justify-content:space-between; paddin-top:8rem;">
               <td>
               <img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[0]}}_logo.svg" alt="Card image cap">
-              </td><td style="position:relative;top:1rem;">{{ at }}</td>
+              </td><td style="position:relative;top:1rem;size:1.3rem;">{{ at }}</td>
               <td><img style="height:3rem;"src="https://stats.nba.com/media/img/teams/logos/{{abv[1]}}_logo.svg" alt="Card image cap">
               </td>
-              <td  class="card-title" style="position:relative;top:1rem;{% if game[7]=='L'%}color:red;{% else %}color:green;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
+              <td  class="card-title result" style="position:relative;{% if game[7]=='L'%}color:red;{% else %}color:lightgreen;{% endif %}">{{ game[26]}} - {{ game[26] - game[27] }}
               </td>
             </tr>
           </table>
@@ -111,14 +139,14 @@
       </div>
       <div class="row d-flex justify-content-around flex-row">
         <div class="p-6 mx-auto">
-         <img style="opacity:0.65;display:block"src="data:image/png;base64, {{ graph.0 }}" /></div>
+         <img style="opacity:0.8;display:block"src="data:image/png;base64, {{ graph.0 }}" /></div>
         <div class="p-6 mx-auto" >
-      <img  style="opacity:0.65" src="data:image/png;base64, {{ graph.1 }}" /> </div>
+      <img  style="opacity:0.8" src="data:image/png;base64, {{ graph.1 }}" /> </div>
       </div>
       
-      <h3> Stats des Joueurs </h3>
+      <h3 id="joueurs" class="whitetitle"> Stats des Joueurs </h3>
       {% include 'playerstats.html.twig' %}
-      <h3> Infirmerie </h3>
+      <h3 id="blessures" class="whitetitle"> Infirmerie </h3>
       <div id="injuredplayers" class="injuries">   
           
           <table class="table table-hover table-dark">
@@ -162,7 +190,7 @@
           </table>
       </div>
 
-      <h3> Highlights de la dernière rencontre </h3>
+      <h3 id="highlights" class="whitetitle"> Highlights de la dernière rencontre </h3>
       <div class="youtube-player center-div">
           <figure style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 0px;">
           <iframe src="https://www.youtube.com/embed/{{link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
@@ -171,7 +199,7 @@
 
       
         
-      <h3> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
+      <h3 id="pronostiques" class="whitetitle"> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
 
       <div class="container">
             <div class="row">
@@ -206,19 +234,13 @@
       <div class="container">
         {{ form(form) }}
       </div>
+      
+
     </div>
-    </div>
-    <div class="col-ld-2 order-first order-sd-2 order-md-2 col-md-6 ">
-      <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent">Twitter</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
-    <div class="col-ld-2 col-md-6 order-3">
-      <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent">Twitter</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
+   
 
   </div>
-</div>
-
-
+ 
+</div>        
+  <div style="margin-top:200px;">    {% include 'matchs_de_la_nuit.html.twig' %}</div>
 {% endblock %}

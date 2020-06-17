@@ -65,7 +65,6 @@ $aname = str_replace(' ', '+', $teams[1]->getStats()['Team']);
 
         $link=$MatchsDeLaNuit->getlink($hname,$aname);
  
-echo $link;
  
 $image=$graphManager->player5Graph($homeplayers);
 $image2=$graphManager->player5Graph($awayplayers);
