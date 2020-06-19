@@ -59,15 +59,15 @@
 
 <div class="container-fluid">
   <div class="row">
-   <div class="col-2 order-first col-sd-6 ">
+   <div class="col-lg-2 order-lg-first col-6 order-2  ">
       <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent" data-tweet-limit="12">Twitter</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    <div class="col-2 order-3 col-sd-6">
+    <div class="col-lg-2 col-6 order-last">
       <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent" data-tweet-limit="12">Twitter</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    <div class="col-8 col-sd-12 order-2">
+    <div class="col-lg-8 col-10 order-fisrt mx-auto">
       <h3  class="whitetitle"> Cotes </h3>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Pari </label>
@@ -139,9 +139,9 @@
       </div>
       <div class="row d-flex justify-content-around flex-row">
         <div class="p-6 mx-auto">
-         <img style="opacity:0.8;display:block"src="data:image/png;base64, {{ graph.0 }}" /></div>
+         <img style="opacity:0.8;display:block;margin-top:10px;"src="data:image/png;base64, {{ graph.0 }}" /></div>
         <div class="p-6 mx-auto" >
-      <img  style="opacity:0.8" src="data:image/png;base64, {{ graph.1 }}" /> </div>
+      <img  style="opacity:0.8;display:block;margin-top:10px;" src="data:image/png;base64, {{ graph.1 }}" /> </div>
       </div>
       
       <h3 id="joueurs" class="whitetitle"> Stats des Joueurs </h3>

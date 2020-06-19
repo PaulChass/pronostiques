@@ -2,7 +2,7 @@
     <div class="mx-auto" style="opacity:0.8;border-bottom:solid navy;margin-bottom:20px;" >
     <div class="row d-flew justify-content-around">
         {% for match in matchs  %}
-        <div class="col-2" style="margin:20px 0px 20px 0px;">
+        <div class="col-lg-2 col-3 col-sm-1" style="margin:20px 0px 20px 0px;">
             <button class="card fa bg-dark" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
                 <li class="list-group-item" style="list-style:none">
                     <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:100px;width:150px;" ></li>
