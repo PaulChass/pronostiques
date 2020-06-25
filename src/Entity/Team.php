@@ -69,6 +69,11 @@ class Team
      */
     private $last5games = [];
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $advancedStats = [];
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -214,6 +219,18 @@ class Team
     public function setLast5games(array $last5games): self
     {
         $this->last5games = $last5games;
+
+        return $this;
+    }
+
+    public function getAdvancedStats(): ?array
+    {
+        return $this->advancedStats;
+    }
+
+    public function setAdvancedStats(array $advancedStats): self
+    {
+        $this->advancedStats = $advancedStats;
 
         return $this;
     }

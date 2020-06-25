@@ -87,7 +87,19 @@ class StatsManager
     {
         
         $teamsStats = $this->curlRequest('http://www.elpauloloco.ovh/AdvancedTeamStats.json');
-        $teamStats = $this->returnStats($teamId,$teamsStats,null);
+        $i=0;
+        while($teamsStats->resultSets[0]->rowSet[$i][0] !== $teamId )
+        {
+            $i++;
+        }
+        $teamStats['offRating']=$teamsStats->resultSets[0]->rowSet[$i][8];
+        $teamStats['offRatingRank']=$teamsStats->resultSets[0]->rowSet[$i][32];
+        $teamStats['defRating']=$teamsStats->resultSets[0]->rowSet[$i][10];
+        $teamStats['defRatingRank']=$teamsStats->resultSets[0]->rowSet[$i][33];
+        $teamStats['trueShooting']=$teamsStats->resultSets[0]->rowSet[$i][21];
+        $teamStats['trueShootingRank']=$teamsStats->resultSets[0]->rowSet[$i][43];
+        $teamStats['pace']=$teamsStats->resultSets[0]->rowSet[$i][23];
+        $teamStats['paceRank']=$teamsStats->resultSets[0]->rowSet[$i][44];
         return $teamStats;
     }   
 
