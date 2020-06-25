@@ -6,6 +6,7 @@
 
 
 {% block body %}
+<h1 class="d-flex justify-content-center whitetitle"> Matchs de la nuit </h1>
 {% include 'matchs_de_la_nuit.html.twig' %}
 
 <div class="container mb-1" id="comparaison">
@@ -59,7 +60,7 @@
 
 <div class="container-fluid">
   <div class="row">
-   <div class="col-lg-2 order-lg-first col-6 order-2  ">
+   <div class="col-lg-2 order-lg-first col-6  order-2  ">
       <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent" data-tweet-limit="12">Twitter</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
@@ -67,16 +68,16 @@
       <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent" data-tweet-limit="12">Twitter</a>
       <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    <div class="col-lg-8 col-10 order-fisrt mx-auto">
+    <div class="col-lg-8 col-10 col-sm-12 order-fisrt mx-auto">
       <h3  class="whitetitle"> Cotes </h3>
       <div class="form-group">
         <label for="exampleFormControlSelect1">Pari </label>
         <select class="form-control" id="exampleFormControlSelect1">
           <option>Face a Face</option>
+          <option>En attente du retour des cotes</option>
+          <option>Affichera la cote</option>
+          <option>Et permet d'enregirstrer le pari</option>
           <option></option>
-          <option>3</option>
-          <option>3</option>
-          <option>5</option>
         </select>
       </div>
       <div>
@@ -194,6 +195,11 @@
       <div class="youtube-player center-div">
           <figure style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 0px;">
           <iframe src="https://www.youtube.com/embed/{{link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
+          {% if link is null %}
+<div class="alert alert-primary" role="alert">
+          La vidéo ne se lance pas !? Essaye de rafraichir la page :-)   
+</div>
+{% endif %}
           </figure>
       </div>
 
@@ -201,13 +207,13 @@
         
       <h3 id="pronostiques" class="whitetitle"> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
 
-      <div class="container">
+      <div class="container" >
             <div class="row">
-              <div class="col-md-8">
+              <div class="col-12">
                 <div class="page-header">
-                  <h3><small class="pull-right">{{ comments|length}} pronostiques</small> Pronostiques</h3>
+                  <h3><small class="pull-right" style="color:white">{{ comments|length}} pronostiques</small></h3>
                 </div> 
-                <div class="comments-list">
+                <div class="comments-list bg-dark" style="color:white">
                 {% for comment in comments %}
                     <div class="media">
                         <p class="pull-right"><small>{{ comment.PublishDate|date("m/d/Y") }}</small></p>

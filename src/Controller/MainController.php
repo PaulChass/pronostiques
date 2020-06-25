@@ -63,7 +63,14 @@ class MainController extends AbstractController
 $hname = str_replace(' ', '+', $teams[0]->getStats()['Team']);
 $aname = str_replace(' ', '+', $teams[1]->getStats()['Team']);  
 
+$link=$MatchsDeLaNuit->getlink($hname,$aname);
+for ($i=0; $i < 10; $i++) { 
+    if($link===""){
         $link=$MatchsDeLaNuit->getlink($hname,$aname);
+    } 
+    else{$i=1000;}    
+}
+
  
  
 $image=$graphManager->player5Graph($homeplayers);

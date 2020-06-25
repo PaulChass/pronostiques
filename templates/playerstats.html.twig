@@ -19,13 +19,13 @@
         <th scope="col"> Ctr </th>
         <th scope="col"> +/- </th>
         <th scope="col"> Min </th>
-        <th scope="col"> Matchs </th>
+        <th scope="col"> Matchs </th>ty
 
       </tr>
       </thead>
       <tbody>
     {% for joueur in joueurs_domicile %}
-        <tr>
+        <tr class="ty-compact-list1">
         <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}} </td>
         <td>{{joueur.stats.points}} 
         {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
@@ -50,6 +50,8 @@
         
       </tr> 
     {% endfor %}
+    <tr  colpan="6" class="show-more1 d-flex justify-content-center"><td style="text-align:center">Voir plus</td></tr>
+
     </tbody>    
     </table>
 
@@ -72,7 +74,7 @@
     </thead>
     <tbody>
     {% for joueur in joueurs_exterieur %}
-      <tr>
+      <tr class="ty-compact-list2">
         <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/>{{joueur.stats.name}}</td>
         <td>{{joueur.stats.points}} 
         {% if joueur.stats.pointsRank < 50 %}({{joueur.stats.pointsRank}}){% endif %}</td>
@@ -96,6 +98,8 @@
         <td>{{joueur.stats.games}}</td>
       </tr> 
     {% endfor %}
+
+    <tr class="show-more2 d-flex justify-content-center"><td>Voir plus</td></tr>
     </tbody>
     </table>
 </div>
@@ -109,10 +113,10 @@
        <div class="btn-group center-div" role="group" style="display: inline-block;padding: 20px;">
 
    {% include 'btngroup.html.twig' with {id: 'player5',name:'player',btn_label:'Générales'} %}
-          {% include 'btngroup.html.twig' with {id:'player5' ,name:'player5',btn_label:'5derniers'} %}
+          {% include 'btngroup.html.twig' with {id:'player5' ,name:'player5',btn_label:'5 Derniers'} %}
          </div>
          <div>
-          <table class="table table-hover table-dark" style="text-align:left;">
+          <table class="table table-hover table-dark wrapper" style="text-align:left;">
            <thead>
             <tr>
               <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.stats.team_abv}}_logo.svg"/></th>
@@ -132,7 +136,7 @@
            <tbody>
           {% for joueur in joueurs_domicile %}
           {% if joueur.stats5 is not null and joueur.stats5 is not empty %}
-              <tr>
+            <tr class="ty-compact-list3">
               <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats5.id}}.png"/>{{joueur.stats5.name}} </td>
               <td>{{joueur.stats5.points}} 
               {% if joueur.stats5.pointsRank < 50 %}({{joueur.stats5.pointsRank}}){% endif %}</td>
@@ -153,13 +157,15 @@
               <td> {{joueur.stats5.plusminus}}{% if joueur.stats5.plusminusRank < 50 %}({{joueur.stats5.plusminusRank}}){% endif %}</td>
               <td> {{joueur.stats5.minutes}}{% if joueur.stats5.minutesRank < 50 %}({{joueur.stats5.minutesRank}}){% endif %}</td>
               <td>{{joueur.stats5.games}}</td>
-            </tr> 
+            </tr>
+        
           {% endif %}
          {% endfor %}
-         </tbody>    
+
+    <tr class="show-more3 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>    
          </table>
 
-         <table class="table table-hover table-dark">
+         <table class="table table-hover table-dark" style="text-align:left;">
          <thead>
           <tr>
             <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.stats.team_abv}}_logo.svg"/></th>
@@ -180,7 +186,7 @@
           {% for joueur in joueurs_exterieur %}
           {% if joueur.stats5 is not null and joueur.stats5 is not empty %}
 
-            <tr>
+            <tr class="ty-compact-list4">
               <td><img class="small-picture" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats5.id}}.png"/>{{joueur.stats5.name}}</td>
               <td>{{joueur.stats5.points}} 
               {% if joueur.stats5.pointsRank < 50 %}({{joueur.stats5.pointsRank}}){% endif %}</td>
@@ -205,7 +211,8 @@
             </tr> 
             {% endif %}
           {% endfor %}
-         </tbody>
+
+    <tr class="show-more4 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>
          </table>
          </div> 
 </div>

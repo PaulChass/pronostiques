@@ -1,13 +1,13 @@
-{% block body %}
+
     <div class="mx-auto" style="opacity:0.8;border-bottom:solid navy;margin-bottom:20px;" >
     <div class="row d-flew justify-content-around">
         {% for match in matchs  %}
-        <div class="col-lg-2 col-3 col-sm-1" style="margin:20px 0px 20px 0px;">
+        <div class="col-lg-2 col-3" style="margin:20px 0px 20px 0px;">
             <button class="card fa bg-dark" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
                 <li class="list-group-item" style="list-style:none">
-                    <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:100px;width:150px;" ></li>
+                    <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
                 <li class="list-group-item" style="list-style:none">
-                    <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:100px;width:150px;" ></li>
+                    <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
                 <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
                     {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
             </a>
@@ -16,4 +16,4 @@
         {% endfor %}
     </div>
 </div>
-{% endblock %}
+

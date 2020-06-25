@@ -45,3 +45,13 @@ body{background-image: url('https://www.desktopbackground.org/download/o/2010/09
 #form_save{margin: auto;width:100%;}
 .whitetitle{color:whitesmoke;margin-top:50px;margin-bottom: 10px;}
 .result{font-size:1.3rem;text-align:right;}
+
+.ty-compact-list {
+  padding: 0px 5px 5px 0px;
+  float: left;
+  width: 100%;
+}
+.show-more {
+  display: none;
+  cursor: pointer;
+}
