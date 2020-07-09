@@ -44,7 +44,19 @@ $(".btn-overall").click(function(){
     $(".playerstats").hide();
     $("#player5").show();
   });
-  
+
+
+  $(".left").hover(function(){
+    $(".hovershow").hide();
+    console.log('What up dough! ');
+  });
+$("#ts").hover(function(){
+  $(".hovershow").show();
+  console.log('What up dough! ');
+});
+
+$('span.hovershow').hide();
+
 
 
 
@@ -101,6 +113,8 @@ $(".btn-overall").click(function(){
       //change text of show more element just for demonstration purposes to this demo
       $(this).text() === 'Voir plus' ? $(this).html('<td>Voir moins</td>') : $(this).html('<td>Voir plus</td>');
     });
+
+
 
 
  //// BOUTONS VOIR PLUS 

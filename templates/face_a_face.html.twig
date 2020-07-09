@@ -8,55 +8,8 @@
 {% block body %}
 <h1 class="d-flex justify-content-center whitetitle"> Matchs de la nuit </h1>
 {% include 'matchs_de_la_nuit.html.twig' %}
+{% include 'navbar.html.twig' %}
 
-<div class="container mb-1" id="comparaison">
-  <nav class="navbar navbar-expand-lg  navbar-dark bg-dark  "  style:"">  
-    <form class="form-inline" style="width:100%">
-      
-
-    <!-- Collapse button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse d-flex justify-content-center " style=""  id="basicExampleNav" >
-
-      <ul class="navbar-nav d-flex justify-content-between " style="width:100%;" >
-        <li class="nav-item active">
-          <a class="nav-link" href="#equipes">Stats équipes
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-          <li class="nav-item ">
-          <a class="nav-link" href="#tendances">Tendances
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-          <li class="nav-itemk">
-          <a class="nav-link" href="#joueurs">Stats joueurs
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-         <li class="nav-item ">
-          <a class="nav-link" href="#blessures">Infirmerie
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#pronostiques">Pronostiques
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#">Mes Paris(TO DO)  </a>
-        </li>
-      </ul>
-    </div>
-    </form>
-  </nav>
-</div>
 
 <div class="container-fluid">
   <div class="row">
@@ -76,13 +29,17 @@
           <option>Face a Face</option>
           <option>En attente du retour des cotes</option>
           <option>Affichera la cote</option>
-          <option>Et permet d'enregirstrer le pari</option>
-          <option></option>
+          <option>permet d'enregirstrer le pari</option>
+          <option>et de comparer son roi aved des potos :-) </option>
         </select>
       </div>
-      <div>
+
+      {% include 'intro.html.twig'%}
+
+
+      <div>       
       <h3 id="equipes" class="whitetitle"> Stats des équipes </h3>
-        {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
+        {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats,'hadvanced':teams.0.advancedStats,'aadvanced':teams.1.advancedStats, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
         {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Equipe 5 Derniers ( différence )'} %}
         {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
       </div>

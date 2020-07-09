@@ -8,7 +8,7 @@
 
   <thead>
     <tr>
-      <th scope="col" class="left" style="margin-top: 50vh;transform: translateY(-25%);">{{arrayTitle}}</th>
+      <th scope="col" class="left" style="margin-top: 50vh;transform: translateY(0%);">{{arrayTitle}}  </th>
       <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg"/></th>
       <th scope="col"><img style="max-width:120px" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg"/></th>
     </tr>
@@ -33,9 +33,18 @@
         {% else %}({{away.Rank}}) 
         {% endif %}{% endif %}</td>
     </tr>
+    {% if hadvanced is defined %}
+     {% include 'stats_tr.html.twig' with {title:'Rating off', hstat:hadvanced.offRating, hstatRank:hadvanced.offRatingRank, astat:aadvanced.offRating, astatRank: aadvanced.offRatingRank} %}
+     {% include 'stats_tr.html.twig' with {title:'Rating def', hstat:hadvanced.defRating, hstatRank:hadvanced.defRatingRank, astat:aadvanced.defRating, astatRank: aadvanced.defRatingRank} %}
+    {% endif %}
     {% include 'stats_tr.html.twig' with {title:'Points', hstat:home.points, hstatRank:home.pointsRank, astat:away.points, astatRank: away.pointsRank} %}
+    {% if hadvanced is defined %}
+      {% include 'stats_tr.html.twig' with {title:'Pace', hstat:hadvanced.pace, hstatRank:hadvanced.paceRank, astat:aadvanced.pace, astatRank: aadvanced.paceRank} %}
+    {% endif %}
     {% include 'stats_tr.html.twig' with {title:'%Tir', hstat:home.fg_pct, hstatRank:home.fg_pctRank, astat:away.fg_pct, astatRank: away.fg_pctRank} %}
-    
+    {% if hadvanced is defined %}
+      {% include 'stats_tr.html.twig' with {title:'%TS *', hstat:hadvanced.trueShooting, hstatRank:hadvanced.trueShootingRank, astat:aadvanced.trueShooting, astatRank: aadvanced.trueShootingRank} %}
+    {% endif %}
     {% include 'stats_tr.html.twig' with {title:'Rebonds', hstat:home.rebounds, hstatRank:home.reboundsRank, astat:away.rebounds, astatRank: away.reboundsRank} %}
     {% include 'stats_tr.html.twig' with {title:'Contres', hstat:home.blocks, hstatRank:home.blocksRank, astat:away.blocks, astatRank: away.blocksRank} %}
     {% include 'stats_tr.html.twig' with {title:'Passes Dec', hstat:home.assists, hstatRank:home.assistsRank, astat:away.assists, astatRank: away.assistsRank} %}

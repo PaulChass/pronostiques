@@ -1,6 +1,7 @@
 <tr>
-  <th scope="row" class="left">{{title}}</th>
+  <th scope="row" class="left" {% if title == '%TS *' %} id="ts"><span class="hover"> {{title}}</span> <span class="hovershow" style="display:none;font-size:0.8rem;font-style:italic;">    Tir ajusté avec les 3pts et LF -- PTS / (2(Tir tentés + 0.44 LF tentés))</span>{% else %}> {{title}}  {% endif %}</th>
   <td>{{hstat}} 
+        
         {% if home.pointsdiff is defined %}
             {% if hstatRank > 0 %}
                   <span class="text-success">({{hstatRank}})</span>

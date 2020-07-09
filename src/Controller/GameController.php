@@ -84,8 +84,8 @@ class GameController extends AbstractController
             $ateam->SetStats5($stats5);
             $last5=$StatsManager->last5games($ateamid);
             $ateam->setLast5games($last5);
-            $advancedStats = $StatsManager->advancedTeamStats($hteamid);
-            $hteam->SetAdvancedStats($advancedStats);
+            $advancedStats = $StatsManager->advancedTeamStats($ateamid);
+            $ateam->SetAdvancedStats($advancedStats);
             $statsLocation = $StatsManager -> locationStats($ateamid,'Road');
             $ateam->SetStatsLocation($statsLocation);
 
