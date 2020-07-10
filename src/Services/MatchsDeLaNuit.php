@@ -17,7 +17,7 @@ class MatchsDeLaNuit
 **/
     public function MatchsDeLaNuit()
     {
-        $response= $this->curlRequest('http://www.elpauloloco.ovh/2020-03-06.json');
+        $response= $this->curlRequest('http://www.elpauloloco.ovh/2020-07-30.json');
         
         $matchsDeLaNuit=[];$match=[];
         
@@ -52,15 +52,24 @@ class MatchsDeLaNuit
   return $data;
 }
     public function getlink($hname,$aname)
-    {
-        $url = $this->curl_get_contents('https://www.youtube.com/results?search_query=Recap+'.$hname.'+VS+'.$aname.'+Full+Game+Highlights'); // Ont récupere tout le code xhtml de la page.
-        preg_match_all('`<a href="([^>]+)">[^<]+</a>`',$url,$liens);
-         // Ont recherche tout les liens présent sur la page.
-        $count = count($liens[0]); // Nombre de liens trouv
-        if($count>0){
-        $link=substr($liens[0][1],18);
-        $link=substr($link, 0, 11); return $link;}
-        $link="";return($link);
+    {   
+        $DEVELOPER_KEY = 'AIzaSyDHKLxOrQ4xFSHPRk4AQwIvp-p-8D3qEAk';
+
+        $client = new \Google_Client();
+        $client->setScopes([
+            'https://www.googleapis.com/auth/youtube.force-ssl',
+        ]);
+        $client->setDeveloperKey($DEVELOPER_KEY);
+
+        // Define service object for making API requests.
+        $youtube = new \Google_Service_YouTube($client);
+
+        $response = $youtube->search->listSearch('id,snippet', array(
+        'q' => $hname.'VS'.$aname.'Full+Game+Recap'.$aname.'VS'.$hname,
+        'order' => 'searchSortUnspecified',
+        'maxResults' => 1,
+        ));
+    $link= $response['items'][0]['id']['videoId'];return($link);
     }
 
     private function curlRequest($url)

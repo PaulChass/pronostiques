@@ -163,27 +163,27 @@
       
         
       <h3 id="pronostiques" class="whitetitle"> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
-
+ 
       <div class="container" >
             <div class="row">
               <div class="col-12">
-                <div class="page-header">
-                  <h3><small class="pull-right" style="color:white">{{ comments|length}} pronostiques</small></h3>
-                </div> 
+               
                 <div class="comments-list bg-dark" style="color:white">
+
                 {% for comment in comments %}
                     <div class="media">
-                        <p class="pull-right"><small>{{ comment.PublishDate|date("m/d/Y") }}</small></p>
+                
                           <a class="media-left" href="#">
-                            <img src="http://lorempixel.com/40/40/people/{{random(3)}}/">
+                            <img src="http://lorempixel.com/40/40/sports/{{random(3)}}/">
                           </a>
                           <div class="media-body">
                               
                             <h4 class="media-heading user_name">{{comment.username}}-{{comment.bet}}</h4>
                             {{comment.message}}
                             
-                            <p><small><a href="">Like</a> </small></p>
                           </div>
+                                                  <p class="pull-right"><small>{{ comment.PublishDate|date("h:i") }}</small></p>
+
                     </div>
                   {% endfor %}
                 </div>
