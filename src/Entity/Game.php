@@ -54,6 +54,11 @@ class Game
      */
     private $teams;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $videoId;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -183,6 +188,18 @@ class Game
                 $team->setGame(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVideoId(): ?string
+    {
+        return $this->videoId;
+    }
+
+    public function setVideoId(string $videoId): self
+    {
+        $this->videoId = $videoId;
 
         return $this;
     }

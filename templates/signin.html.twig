@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authentification
+{% endblock %}
+
+
+{% block body %}
+<h1 class="d-flex justify-content-center whitetitle"> Matchs de la nuit </h1>
+{% include 'matchs_de_la_nuit.html.twig' %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent" class="bg-secondary">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+        <h3 class="whitetitle"> Connexion </h3>
+    </div>
+
+ 
+     <!-- Login Form -->
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
+    {{ form_row(form.password, { 'label': 'Mot de passe' }) }}
+
+   <span class="bg-success"> {{ form_row(form.save, { 'label': 'Connexion' }) }}</span>
+    {{ form_end(form) }}
+    <!-- Remind Passowrd -->
+    <div id="formFooter" class="bg-secondary">
+      <a class="alert-warning" style="width:100%;padding:10px;" href="#">S'inscrire</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

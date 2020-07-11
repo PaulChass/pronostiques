@@ -31,7 +31,7 @@ class MainController extends AbstractController
     {
         $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();
  
-        return $this->render('matchs_de_la_nuit.html.twig', [
+        return $this->render('home.html.twig', [
             'matchs'=>$matchsDeLaNuit,
         ]);
     }
@@ -48,35 +48,15 @@ class MainController extends AbstractController
         $game = $repository->findOneBy(['gameId' => $gameId]);
         $hometeam = $game->getHometeamid();
         $awayteam = $game->getAwayteamid();
-        $teams= $teamrepository->findBy(['game' => $game]);
-      
-
-
-        
-       
-        $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();
-        
+        $teams= $teamrepository->findBy(['game' => $game]);  
+        $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();   
         $homeplayers = $playerrepository -> findBy(['team'=>$teams[0]]);
         $awayplayers = $playerrepository -> findBy(['team'=>$teams[1]]);
-
-
-$hname = str_replace(' ', '+', $teams[0]->getStats()['Team']);
-$aname = str_replace(' ', '+', $teams[1]->getStats()['Team']);  
-
-$link=$MatchsDeLaNuit->getlink($hname,$aname);
-for ($i=0; $i < 10; $i++) { 
-    if($link===""){
-        $link=$MatchsDeLaNuit->getlink($hname,$aname);
-    } 
-    else{$i=1000;}    
-}
-
- 
- 
-$image=$graphManager->player5Graph($homeplayers);
-$image2=$graphManager->player5Graph($awayplayers);
-$graph=[$image,$image2];
         
+        $image=$graphManager->player5Graph($homeplayers);
+        $image2=$graphManager->player5Graph($awayplayers);
+        $graph=[$image,$image2];
+                
         $form = $commentFormBuilder-> commentBuild($request,$gameId);
         $comments = $commentRepository->findBy(['game' => $game]);
         //$cotes = $StatsManager -> CotesFaceAFace($hometeam,$awayteam);
@@ -86,9 +66,25 @@ $graph=[$image,$image2];
             'matchs'=>$matchsDeLaNuit,
             'form'=> $form->createView(),
             'graph'=>$graph,
+            'game'=>$game,
             'comments' => $comments,
-            'link'=>$link,
             'teams'=>$teams,
         ]);
     }
+
+    /**
+     * @Route("/signin", name="signin")
+     */
+    public function signin(MatchsDeLaNuit $MatchsDeLaNuit,Request $request, SignInFormBuilder $signInFormBuilder)
+    {
+        $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();   
+        $form = $signInFormBuilder -> signInBuild($request);
+        return $this->render('signin.html.twig' ,[
+            'matchs'=>$matchsDeLaNuit,
+            'form'=> $form->createView(),
+
+        ]);
+    }
+
+    
 }

@@ -65,9 +65,8 @@ class MatchsDeLaNuit
         $youtube = new \Google_Service_YouTube($client);
 
         $response = $youtube->search->listSearch('id,snippet', array(
-        'q' => $hname.'VS'.$aname.'Full+Game+Recap'.$aname.'VS'.$hname,
-        'order' => 'searchSortUnspecified',
-        'maxResults' => 1,
+        'q' => $hname.'VS'.$aname.'Full+Game+Recap',
+        'maxResults' => 5,
         ));
     $link= $response['items'][0]['id']['videoId'];return($link);
     }

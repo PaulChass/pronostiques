@@ -25,13 +25,13 @@ class GameController extends AbstractController
         for ($i=0; $i < count($games) ; $i++) { 
             $hteamid=$games[$i]['HomeTeamId'];
             $ateamid=$games[$i]['AwayTeamId'];
-
+            
             $game = new Game();
             $game->setDatetime(new \DateTime($games[$i]['Time']));
             $game->setAwayteamid($ateamid);
             $game->setHometeamid($hteamid);
             $game->setGameid($games[$i]['GameId']);
-            $entityManager->persist($game);
+            
 
 
             $hteam= new Team();
@@ -106,8 +106,12 @@ class GameController extends AbstractController
             }
             echo $i;
             $game->addTeam($ateam);
+            $astats=$ateam->getStats();
+            $hstats=$hteam->getStats();
+            $videoId = $MatchsDeLaNuit -> getLink($hstats['Team'],$astats['Team']);
+            $game->setVideoId($videoId);
             $entityManager->persist($ateam);
-
+            $entityManager->persist($game);
 
             $entityManager->flush();
         }

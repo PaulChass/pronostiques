@@ -146,12 +146,7 @@ class StatsManager
                     $player['fg_pct']=$playersStats->resultSets[0]->rowSet[$i][12];
                     $player['fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][41];
                     $player['three_fg_pct']=$playersStats->resultSets[0]->rowSet[$i][15];  
-                    $player['three_fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][44];    
-  
-
-
-
-
+                    $player['three_fg_pctRank']=$playersStats->resultSets[0]->rowSet[$i][44];   
                     array_push($players,$player);
                 }
         }

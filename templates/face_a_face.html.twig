@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-{{ teams.0.Stats.Team }} VS {{ teams.1.Stats.Team}}
+{{ teams.0.Stats.Team }} VS {{ teams.1.Stats.Team}} - Pronostics / Statistiques / Tendances des équipes
 {% endblock %}
 
 
 {% block body %}
 <h1 class="d-flex justify-content-center whitetitle"> Matchs de la nuit </h1>
 {% include 'matchs_de_la_nuit.html.twig' %}
+
 {% include 'navbar.html.twig' %}
 
 
@@ -151,12 +152,7 @@
       <h3 id="highlights" class="whitetitle"> Highlights de la dernière rencontre </h3>
       <div class="youtube-player center-div">
           <figure style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 0px;">
-          <iframe src="https://www.youtube.com/embed/{{link}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
-          {% if link is null %}
-<div class="alert alert-primary" role="alert">
-          La vidéo ne se lance pas !? Essaye de rafraichir la page :-)   
-</div>
-{% endif %}
+          <iframe src="https://www.youtube.com/embed/{{game.videoId}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" loading="lazy"></iframe>
           </figure>
       </div>
 
@@ -174,7 +170,7 @@
                     <div class="media">
                 
                           <a class="media-left" href="#">
-                            <img src="http://lorempixel.com/40/40/sports/{{random(3)}}/">
+                            <img src="http://lorempixel.com/40/40/people/{{random(3)}}/">
                           </a>
                           <div class="media-body">
                               

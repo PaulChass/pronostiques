@@ -111,12 +111,11 @@
 
 <div id="player5" class="playerstats" style="text-align:center;width:100%;">  
        <div class="btn-group center-div" role="group" style="display: inline-block;padding: 20px;">
-
-   {% include 'btngroup.html.twig' with {id: 'player5',name:'player',btn_label:'Générales'} %}
+          {% include 'btngroup.html.twig' with {id: 'player5',name:'player',btn_label:'Générales'} %}
           {% include 'btngroup.html.twig' with {id:'player5' ,name:'player5',btn_label:'5 Derniers'} %}
-         </div>
-         <div>
-          <table class="table table-hover table-dark wrapper" style="text-align:left;">
+        </div>
+        <div>
+          <table class="table table-hover table-dark " style="text-align:left;">
            <thead>
             <tr>
               <th scope="col"><img style="max-height:80px" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.stats.team_abv}}_logo.svg"/></th>
@@ -162,7 +161,7 @@
           {% endif %}
          {% endfor %}
 
-    <tr class="show-more3 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>    
+            <tr class="show-more3 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>    
          </table>
 
          <table class="table table-hover table-dark" style="text-align:left;">
@@ -212,7 +211,7 @@
             {% endif %}
           {% endfor %}
 
-    <tr class="show-more4 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>
+          <tr class="show-more4 d-flex justify-content-center"><td>Voir plus</td></tr>         </tbody>
          </table>
-         </div> 
+        </div> 
 </div>

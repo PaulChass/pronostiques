@@ -26,9 +26,9 @@ class CommentFormBuilder extends AbstractController
         $game = $repository->findOneBy(['gameId' => $gameId]);
         $comment->setGameId($game);
         $form = $this->createFormBuilder($comment)
-            ->add('username', TextType::class)
-            ->add('bet', TextType::class)
-            ->add('message', TextareaType::class )
+            ->add('username', TextType::class, ['label' => 'Votre Nom'])
+            ->add('bet', TextType::class, ['label' => 'Votre bet'])
+            ->add('message', TextareaType::class, ['label' => 'Pourquoi ?'] )
             ->add('save', SubmitType::class, ['label' => 'Envoyer'])
             ->getForm();
         
