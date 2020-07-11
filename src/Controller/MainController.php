@@ -79,12 +79,40 @@ class MainController extends AbstractController
     {
         $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();   
         $form = $signInFormBuilder -> signInBuild($request);
+        $error= "";
+        if(isset($_COOKIE['user']))
+        {
+            setcookie('user',$_COOKIE['user']);
+            return $this->redirectToRoute('main');
+        }
+        if(isset($_SESSION['error']))
+        {
+            $error = $_SESSION['error'];
+        }
         return $this->render('signin.html.twig' ,[
             'matchs'=>$matchsDeLaNuit,
             'form'=> $form->createView(),
+            'error'=> $error
 
         ]);
     }
 
+    /**
+     * @Route("/signup", name="signup")
+     */
+    public function signup(MatchsDeLaNuit $MatchsDeLaNuit,Request $request, SignUpFormBuilder $signUpFormBuilder)
+    {
+        $matchsDeLaNuit = $MatchsDeLaNuit -> MatchsDeLanuit();   
+        $form = $signUpFormBuilder -> signUpBuild($request,$matchsDeLaNuit);
+        if(isset($_COOKIE['user']))
+        {
+            setcookie('user',$_COOKIE['user']);
+            return $this->redirectToRoute('main');
+        }
+        return $this->render('signup.html.twig' ,[
+            'matchs'=>$matchsDeLaNuit,
+            'form'=> $form->createView(),
+        ]);
+    }
     
 }

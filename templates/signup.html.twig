@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Authentification
+{% block title %}Inscription
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
 
     <!-- Icon -->
     <div class="fadeIn first">
-        <h3 class="whitetitle"> Connexion </h3>
+        <h3 class="whitetitle"> Inscription </h3>
     </div>
 
  
@@ -24,16 +24,11 @@
 
     {{ form_row(form.username, { 'label': 'Nom d\'utilisateur' }) }}
     {{ form_row(form.password, { 'label': 'Mot de passe' }) }}
-  {% if error != "" %}
-     <p class="alert-danger "> {{ error}} </p>
-{% endif %}
-   <span class="bg-success"> {{ form_row(form.save, { 'label': 'Connexion' }) }}</span>
-    {{ form_end(form) }}
-    <!-- Remind Passowrd -->
-    <div id="formFooter" class="bg-secondary">
-      <a class="alert-warning" style="width:100%;padding:10px;" href={{path('signup') }}>Creer un compte ( express )</a>
-    </div>
 
+
+   <span class="bg-success"> {{ form_row(form.save, { 'label': 'Creer mon compte' }) }}</span>
+    {{ form_end(form) }}
+ 
   </div>
 </div>
 {% endblock %}
