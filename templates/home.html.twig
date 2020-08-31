@@ -6,11 +6,67 @@ Pronostics NBA - Toutes les infos pour parier sur le basket NBA
 
 
 {% block body %}
-<h1 class="d-flex justify-content-center whitetitle"> Matchs à venir </h1>
 {% include 'matchs_de_la_nuit.html.twig' %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2 order-lg-first col-6  order-2  ">
+    </div>
+    <div class="col-lg-2 col-6 order-last">
+    </div>
+    <div class="col-lg-8 col-10 col-sm-12 order-fisrt mx-auto">
+      {% if  app.request.cookies.get('user') is not null  %}
+          <h3 class="whitetitle"> Résultat </h3>
+                    <div class="row" style="justify-content:center">
+          <table class="table table-hover table-dark" style="width:61.8%;" >
+                    <tr>
+                    <td> {{bilan[0]}}  gagnés  {{bilan[1]- bilan[0]}}  perdus</td>
+                    <td>Mon ROI: {{roi|number_format(3)}}</td>
+                    <td> Total: {{total}}</td></tr>
+                    </table>
+                    </div>
 
-{% if  app.request.cookies.get('user') is not null  %}
-<span class="alert-success"> Salut {{ app.request.cookies.get('user') }}! </span>
-<h2> Dashboard en cours de dev </h2>
-{% endif %}
+          <div class="row" style="justify-content:center">
+          <table class="table table-hover table-dark" style="width:61.8%;" >
+          <tr></tr>
+          {% for bet in bets|reverse %}
+              <tr><td> {{ bet.0 }}@ {{ bet.1 }}  </td>
+              <td> {% if bet.2 == 1 %} {{bet.0}}
+              {% elseif bet.2 == 2 %} N
+              {% else %} {{bet.1}}
+              {% endif %} - {{ bet.3 }}  
+
+              </td>
+              <td> {% if bet.4 == 0 %} En cours
+              {% elseif bet.4 == 1 %} Gagné
+              {% elseif bet.4 == 2 %} Perdu
+              {% endif %} 
+              </td>
+          {% endfor %}
+      {% else %}
+        {% include 'nav.html.twig' %}
+        <h3 class="whitetitle" id="home"> Bienvenue sur le site des parieurs NBA !</h3>
+        <h5 class="whitetitle"> Retrouve toutes les stats, cotes, infos et conseil pour faire tes pronostics sur les matchs NBA à venir. </h5>      
+        <h7 class="whitetitle"> Clique simplement sur une rencontre ci-dessous pour comparer les équipes qui vont s'affronter </p>
+        <div class="row d-flex d-block w-100 justify-content-around" alt="First slide">
+          {% for match in matchs  %}
+            <div class="col-lg-2 col-3" style="margin:10px 0px 20px 0px;">
+                <button class="card fa bg-dark" style="z-index:1070" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
+                    <li class="list-group-item" style="list-style:none">
+                        <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:50px;width:100px;" ></li>
+                    <li class="list-group-item" style="list-style:none">
+                        <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:50px;width:100px;" ></li>
+                    <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                        {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+                </a>
+                </button>
+            </div> 
+          {% endfor %}
+        </div>
+        <h3 class="whitetitle" id="betgame"> Jouer au jeu du parieur ! </h3>
+        <h5 class="whitetitle" style="margin-bottom:100px;"> Crée un compte et enregistre tes pronostics pour voir qui est le meilleur parieur ! </h5>
+        <a href={{path('signin')}}><img src="http://dearsportsfan.com/wp-content/uploads/2014/05/ball-dont-lie-1-1024x640.png" style="max-width:100%;display:block;margin-left:auto;margin-right:auto;">   </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}

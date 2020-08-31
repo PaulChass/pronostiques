@@ -12,27 +12,20 @@ class GraphManager
 {
     public function player5Graph($players)
     {
-$datay=[];$pointsoverlast5=[];$name=[];$team=[];
-for ($i=0; $i < 3; $i++) { 
-    if(is_null($players[$i]->getLast5Games())==false)
-    {
-        $last5 = $players[$i]->getLast5Games();
-        array_push($name,$last5[$i][2]);
-        for($j=0;$j<5;$j++)
-        {
-           
-            array_push($pointsoverlast5,$last5[$j][28]);
-            
-            array_push($team,substr($last5[$j][8],4));
-        }
-    array_push($datay,$pointsoverlast5);
-    $pointsoverlast5=[];
-    }
+      $datay=[];$pointsoverlast5=[];$name=[];$team=[];
+      for ($i=0; $i < 5; $i++) { 
+          $last5 = $players[$i]->getLast5Games();
+          array_push($name,$last5[$i][2]);
+          for($j=0;$j<5;$j++)
+          {
+              $pointsoverlast5[4-$j]=$last5[$j][28];
+              $team[4-$j]=substr($last5[$j][8],4); 
+          }
+        array_push($datay,$pointsoverlast5);
+        $pointsoverlast5=[];
 }
-
- 
 // Setup the graph
-$graph = new Graph(360,240);
+$graph = new Graph(480,360);
 $graph->SetMarginColor('white');
 $graph->SetScale("textlin");
 $graph->title->Set('Points sur les 5 derniers matchs');

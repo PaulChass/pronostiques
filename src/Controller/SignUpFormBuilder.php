@@ -37,6 +37,10 @@ class SignUpFormBuilder extends AbstractController
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
             $user = $form->getData();
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+            $db_user = $userRepository->findOneBy(['username' => $user->getUsername()]);
+            if($db_user!=null){$_SESSION['error']='Nom d\'utilisateur déja utilisé. Veuillez réessayer ';}
+            else{
             $entityManager = $this->getDoctrine()->getManager();
             $cryptedPassword = crypt($user->getPassword(),'165!.64sfhfhusbs2224-MonPetitGraindeSEL');
             $user->setPassword($cryptedPassword);
@@ -44,6 +48,7 @@ class SignUpFormBuilder extends AbstractController
             $entityManager->flush();
             $_COOKIE['user']=$user->getUsername();
             $_SESSION['user']=$user->getUsername();
+            }
         }
       
 

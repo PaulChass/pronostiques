@@ -25,11 +25,6 @@ class Team
     private $logourl;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Game::class, inversedBy="teams")
-     */
-    private $game;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $twitter;
@@ -74,6 +69,11 @@ class Team
      */
     private $advancedStats = [];
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $teamId;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -92,18 +92,6 @@ class Team
     public function setLogourl(string $logourl): self
     {
         $this->logourl = $logourl;
-
-        return $this;
-    }
-
-    public function getGame(): ?Game
-    {
-        return $this->game;
-    }
-
-    public function setGame(?Game $game): self
-    {
-        $this->game = $game;
 
         return $this;
     }
@@ -231,6 +219,18 @@ class Team
     public function setAdvancedStats(array $advancedStats): self
     {
         $this->advancedStats = $advancedStats;
+
+        return $this;
+    }
+
+    public function getTeamId(): ?int
+    {
+        return $this->teamId;
+    }
+
+    public function setTeamId(int $teamId): self
+    {
+        $this->teamId = $teamId;
 
         return $this;
     }

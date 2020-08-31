@@ -11,6 +11,14 @@ import '../css/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 import $ from 'jquery';
 
+$.ajax({
+  url: 'https://stats.nba.com/js/data/pointsbet/2019/20200811.json',
+  beforeSend: function(xhr) {
+       xhr.setRequestHeader("Authorization", "Bearer 6QXNMEMFHNY4FJ5ELNFMP5KRW52WFXN5")
+  }, success: function(data){
+      alert(data);
+    console.log(data)  }
+})
 $(".stats").hide();$("#overall").show();
 $(".btn-overall").click(function(){
   $(".stats").hide();
@@ -20,6 +28,14 @@ $(".btn-overall").click(function(){
   $(".btn-last5").click(function(){
     $(".stats").hide();
     $("#last5").show();
+  });
+
+  $("h3").hover(function(){
+    $("#alert").hide();
+  });
+
+  $(".betbutton").hover(function(){
+    $("#alert").show();
   });
 
   $(".btn-location").click(function(){
@@ -35,7 +51,7 @@ $(".btn-overall").click(function(){
   });
 
   $(".playerstats").hide();
-  $("#player").show();
+  $("#player5").show();
   $(".btn-player").click(function(){
     $(".playerstats").hide();
     $("#player").show();
@@ -123,7 +139,19 @@ $('span.hovershow').hide();
 
 
 
-
+$(function () {
+  $("#bet_select").change(function() {
+    var val = $(this).val();
+    if(val === "face") {
+        $("#faf").show();
+        $("#ms").hide();
+    }
+    else if(val === "meilleur") {
+        $("#ms").show();
+        $("#faf").hide();
+    }
+  });
+});
 
 
 

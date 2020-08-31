@@ -1,19 +1,73 @@
+<div class="mx-auto" style="opacity:0.8;border-bottom:solid navy;margin-bottom:20px;" >   
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <h1 class="d-flex justify-content-center whitetitle"> Matchs à venir </h1>
 
-    <div class="mx-auto" style="opacity:0.8;border-bottom:solid navy;margin-bottom:20px;" >
-    <div class="row d-flew justify-content-around">
-        {% for match in matchs  %}
-        <div class="col-lg-2 col-3" style="margin:20px 0px 20px 0px;">
-            <button class="card fa bg-dark" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
-                <li class="list-group-item" style="list-style:none">
-                    <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
-                <li class="list-group-item" style="list-style:none">
-                    <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
-                <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
-                    {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
-            </a>
-            </button>
+                    <div class="row d-flex d-block w-100 justify-content-around" alt="First slide">
+                        {% for match in matchs  %}
+                        <div class="col-lg-2 col-3" style="margin:20px 0px 20px 0px;">
+                            <button class="card fa bg-dark" style="z-index:1070" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
+                                <li class="list-group-item" style="list-style:none">
+                                    <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" >
+                                    <span>{{ match.awayScore }}</span></li>
+                                <li class="list-group-item" style="list-style:none">
+                                    <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" >
+                                    <span>{{ match.homeScore }}</span></li>
+                                {% if match.timeRemaining is not null %}
+                                <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                                    {{match.period}}-{{match.timeRemaining}}</span></li>
+                                {% else %}
+                                <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                                    {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+                                {% endif %}
+                            </a>
+                            </button>
+                        </div>
+                        
+                        {% endfor %}
+                        
+                        {# <div class="col-lg-1" style="font-size: 150px;">
+                            <i class="fa fa-angle-right fa-10x"></i></div> #}
+                    </div>
+            </div>
+            <div class="carousel-item">
+                <h1 class="d-flex justify-content-center whitetitle"> Matchs de la nuit du {{ "tomorrow"|date("d") }} aôut  </h1>
+
+                <div class="row d-flex d-block w-100 justify-content-around" alt="Second Slide">
+                        {% for match in tomorrow_matchs  %}
+                        <div class="col-lg-2 col-3" style="margin:20px 0px 20px 0px;">
+                            <button class="card fa bg-dark" ><a href={{ path('face-a-face', {gameId: match.GameId}) }}#comparaison>   
+                                <li class="list-group-item" style="list-style:none">
+                                    <img src="{{match.HomeLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
+                                <li class="list-group-item" style="list-style:none">
+                                    <img src="{{match.AwayLogoUrl}}" class="card-img p-2" style="height:70px;width:120px;" ></li>
+                                <li class="list-group-item" style="list-style:none"><span class="mx_auto card-text" style="padding:0 10%;text-align:center;">
+                                    {{match.Time|date('H')}}h{{match.Time|date('i')}}</span></li>
+                            </a>
+                            </button>
+                        </div>
+                        
+                        {% endfor %}
+                        
+                        {# <div class="col-lg-1" style="font-size: 150px;">
+                            <i class="fa fa-angle-right fa-10x"></i></div> #}
+                </div>   
+            </div>
+              <ol class="carousel-indicators" style="position:relative;bottom:5px;">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        </ol>
         </div>
-        {% endfor %}
     </div>
+       {# <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="z-index:2">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+        </a>#}
+   
 </div>
-

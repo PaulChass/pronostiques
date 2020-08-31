@@ -14,41 +14,23 @@
     <div class="collapse navbar-collapse d-flex justify-content-center " style=""  id="basicExampleNav" >
 
       <ul class="navbar-nav d-flex justify-content-between " style="width:100%;" >
+        
         <li class="nav-item">
-          <a class="nav-link bg-dark" href={{path('main')}}>Accueil
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#equipes"> Stats équipes
+          <a class="nav-link btn" href="#home">Accueil
             <span class="sr-only">(current)</span>
           </a>
         </li>
           <li class="nav-item ">
-          <a class="nav-link" href="#tendances"> Tendances
+          <a class="nav-link btn" href="#betgame">Jeu du parieur
             <span class="sr-only">(current)</span>
           </a>
         </li>
-          <li class="nav-itemk">
-          <a class="nav-link" href="#joueurs"> Stats joueurs
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-         <li class="nav-item ">
-          <a class="nav-link" href="#blessures"> Infirmerie
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link" href="#pronostics"> Pronostics
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
+        
         <li class="nav-item ">
           {% if  app.request.cookies.get('user') is not null  %}
-          <a class="nav-link bg-primary text-light" href={{path('main')}}>{{app.request.cookies.get('user')}} Pronostics </a>
+          <a class="nav-link btn bg-primary text-light" href={{path('main')}}>{{app.request.cookies.get('user')}} Pronostics </a>
           {% else %}
-          <a class="nav-link bg-primary text-light" href={{path('signin')}}> Connexion / Inscription
+          <a class="nav-link btn bg-primary text-light" href={{path('signin')}}> Connexion / Inscription
            </a>
           {% endif %}
         </li>

@@ -33,15 +33,19 @@ class SignInFormBuilder extends AbstractController
             $cryptedPassword = crypt($user->getPassword(),'165!.64sfhfhusbs2224-MonPetitGraindeSEL');
             $userRepository = $this->getDoctrine()->getRepository(User::class);
             $db_user = $userRepository->findOneBy(['username' => $user->getUsername()]);
-            $db_cryptedPassword = crypt($db_user->getPassword(),'165!.64sfhfhusbs2224-MonPetitGraindeSEL');
-            if($db_cryptedPassword==$cryptedPassword)
-            {
-                $_COOKIE['user']=$user->getUsername();
-            }            
-            else{$_SESSION['error']='Mot de passe incorect. Veuillez réessayer ';
+            if($db_user==null){
+                $_SESSION['error']='Nom d\'utilisateur incorrect. Veuillez réessayer ';
             }
-
-
+            else{
+                $db_cryptedPassword = $db_user->getPassword();
+                if($db_cryptedPassword==$cryptedPassword)
+                {
+                    $_COOKIE['user']=$user->getUsername();
+                    $_SESSION['error']='';
+                }            
+                else{$_SESSION['error']='Mot de passe incorrect. Veuillez réessayer ';
+                } 
+            }
         }
       
 

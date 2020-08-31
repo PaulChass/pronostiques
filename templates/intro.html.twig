@@ -1,7 +1,7 @@
 <div class="intro">
        <h3  class="whitetitle"> Présentation </h3>
         <div class="row ">
-          <div class="col-6" style="width: 18rem;background-color:transparent; color:white;">
+          <div class="col-md-6" style="background-color:transparent; color:white;">
             <div class="">
               <img class=""  style="width:20%;margin:auto;" src="https://stats.nba.com/media/img/teams/logos/{{teams.0.Stats.team_abv}}_logo.svg" alt="{{teams.0.Stats.team_abv}}"/>
             </div> 
@@ -51,6 +51,10 @@
                 {% set assists = [] %}
                 {% set rebounds = []  %}
                 {% set points = []  %}
+                {% set adone = false %}
+                {% set rdone = false  %}
+                {% set pdone = false  %}
+                
 
                 
                 {% for joueur in joueurs_domicile %}
@@ -61,7 +65,8 @@
                 {% endfor %}
                 {% for joueur in joueurs_domicile %}
                  
-                  {% if joueur.stats.points == max(points)%}
+                  {% if joueur.stats.points == max(points) and pdone == false %}
+                   {% set pdone = true %}
                    <table class="table table-hover">
                   <thead>
                     <tr>
@@ -70,7 +75,7 @@
                   <tbody>  
                     <tr>
                       <td class="" style=""> 
-                        <img style="max-height:80px;;" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/ alt="{{joueur.stats.name}}"/>
+                        <img style="max-height:80px;" src="https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/1040x760/{{joueur.stats.id}}.png"/ alt="{{joueur.stats.name}}"/>
                       </td>
                       <td  style="font-size:1.5rem;margin-top: 0vh;transform: translateY(15%);text-align:right;"><span>{{max(points) }} pts </span></td>
                     </tr>
@@ -80,7 +85,8 @@
               
                   {% endif %}
                   
-                  {% if joueur.stats.rebounds == max(rebounds)%}
+                  {% if joueur.stats.rebounds == max(rebounds) and rdone == false %}
+                  {% set rdone = true %}
                    <table class="table table-hover">
                   <thead>
                     <tr>
@@ -97,7 +103,8 @@
                   </table>
                   {% endif %}
                   
-                  {% if joueur.stats.assists == max(assists)%}
+                  {% if joueur.stats.assists == max(assists) and adone == false %}
+                  {% set adone = true %}
                    <table class="table table-hover">
                   <thead>
                     <tr>
@@ -139,7 +146,7 @@
 
 
 
-                      <div class="col-6" style="width: 18rem;background-color:transparent; color:white;">
+                      <div class="col-md-6" style="background-color:transparent; color:white;">
             <div class="">
               <img class="img-top "  style="width:20%;" src="https://stats.nba.com/media/img/teams/logos/{{teams.1.Stats.team_abv}}_logo.svg" alt="{{teams.1.Stats.team_abv}}"/>
             </div> 
@@ -189,6 +196,9 @@
                 {% set assists = [] %}
                 {% set rebounds = []  %}
                 {% set points = []  %}
+                {% set adone = false %}
+                {% set rdone = false  %}
+                {% set pdone = false  %}
 
                 
                 {% for joueur in joueurs_exterieur %}
@@ -199,7 +209,9 @@
                 {% endfor %}
                 {% for joueur in joueurs_exterieur %}
                  
-                  {% if joueur.stats.points == max(points)%}
+                  {% if joueur.stats.points == max(points) and pdone == false %}
+                    {% set pdone = true %}
+
                    <table class="table table-hover">
                   <thead>
                     <tr>
@@ -218,7 +230,9 @@
               
                   {% endif %}
                   
-                  {% if joueur.stats.rebounds == max(rebounds)%}
+                  {% if joueur.stats.rebounds == max(rebounds)  and rdone == false %}
+                                    {% set rdone = true %}
+
                    <table class="table table-hover">
                   <thead>
                     <tr>
@@ -235,7 +249,9 @@
                   </table>
                   {% endif %}
                   
-                  {% if joueur.stats.assists == max(assists)%}
+                  {% if joueur.stats.assists == max(assists)  and adone == false %}
+                                    {% set adone = true %}
+
                    <table class="table table-hover">
                   <thead>
                     <tr>

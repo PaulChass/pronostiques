@@ -6,28 +6,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StatsManager 
 {
-    public function CotesFaceAFace($homeId,$awayId)
-    {
-        $cotesParionsSport = $this->curlRequest('https://www.pointdevente.parionssport.fdj.fr/api/1n2/offre?sport=601600');
-            for ($i=0; $i < count($cotesParionsSport); $i++) {
-                if($cotesParionsSport[$i]->outcomes[0]->label==$this->getFrenchTeamNamebyId($homeId))
-                {
-                    $cote['Domicile'] = $cotesParionsSport[$i]->outcomes[0]->label;
-                    $cote['Domicile_W'] = $cotesParionsSport[$i]->outcomes[0]->cote;
-                    $cote['Exterieur']= $cotesParionsSport[$i]->outcomes[1]->label;
-                    $cote['Exterieur_W']= $cotesParionsSport[$i]->outcomes[1]->cote;
-                    return $cote;
-                }
-                elseif($cotesParionsSport[$i]->outcomes[0]->label==$this->getFrenchTeamNamebyId($awayId))
-                {
-                    $cote['Domicile'] = $cotesParionsSport[$i]->outcomes[1]->label;
-                    $cote['Domicile_W'] = $cotesParionsSport[$i]->outcomes[1]->cote;
-                    $cote['Exterieur']= $cotesParionsSport[$i]->outcomes[0]->label;
-                    $cote['Exterieur_W']= $cotesParionsSport[$i]->outcomes[0]->cote;
-                    return $cote;
-                }
-            }
-        }
+    
       
 
     /**
@@ -234,8 +213,14 @@ class StatsManager
         $stats['stealsRank'] = $teamsStats->resultSets[0]->rowSet[$i][47];
         $stats['fg_pct']=$teamsStats->resultSets[0]->rowSet[$i][9];
         $stats['fg_pctRank'] = $teamsStats->resultSets[0]->rowSet[$i][35];
+        $stats['three_fg_pct']=$teamsStats->resultSets[0]->rowSet[$i][12];
+        $stats['three_fg_pctRank'] = $teamsStats->resultSets[0]->rowSet[$i][38];
+        $stats['three_attempts']=$teamsStats->resultSets[0]->rowSet[$i][11];
+        $stats['three_attemptsRank'] = $teamsStats->resultSets[0]->rowSet[$i][37];
         if (isset($defTeamsStats)){
-            $j=0;while($defTeamsStats->resultSets[0]->rowSet[$j][0] !=$teamId){$j++;}
+            $j=0;
+            while($defTeamsStats->resultSets[0]->rowSet[$j][0] != $teamId){
+                $j++;}
             $stats['d_fg_pct']=$defTeamsStats->resultSets[0]->rowSet[$j][8];
             $rank=1;
             for ($k=0; $k < count($defTeamsStats->resultSets[0]->rowSet); $k++){
@@ -258,24 +243,8 @@ class StatsManager
 
 
 
-    private function getFrenchTeamNamebyId($id)
-    {
-        $teamsStats= $this->curlRequest('http://www.elpauloloco.ovh/teamstats.json');
-        $i=0;
-        while ($teamsStats->resultSets[0]->rowSet[$i][0] !=$id) {$i++;}
-        $string=$teamsStats->resultSets[0]->rowSet[$i][1];
-        $city = explode(' ', $string);
-        $removed = array_pop($city);
-        if(implode(' ',$city)=='Los Angeles'){
-                return 'LA Lakers';}
-        elseif($city[0]=='LA'){
-            $city= 'LA Clippers';}
-        elseif ($city[0]=='Philadelphia') {
-            $city = 'Philadelphie';}
-        return implode(' ',$city);
-    }
-
-    private function getAbvFromId($id)
+    
+    public function getAbvFromId($id)
     {
         $playerStats= $this->curlRequest('http://www.elpauloloco.ovh/playerstats.json');
         $i=0;
@@ -289,7 +258,7 @@ class StatsManager
     {
         $games= $this->curlRequest('http://www.elpauloloco.ovh/teamLastGames.json');
         $i=0;$j=0;$last5=[];
-        while($i<5)
+        while($j<count($games->resultSets[0]->rowSet))
         {
             if($games->resultSets[0]->rowSet[$j][1]==$id)
             {
@@ -319,6 +288,20 @@ class StatsManager
                 $j++;
             }
         return $last5;
+    }
+    public function returnWinOrLose($gameId,$hteamId)
+    {
+        $games= $this->curlRequest('http://www.elpauloloco.ovh/teamLastGames.json');
+        $j=0;
+        while($j<50)
+        { 
+            if($games->resultSets[0]->rowSet[$j][4]==$gameId && $games->resultSets[0]->rowSet[$j][1]==$hteamId )
+            {
+                 return $games->resultSets[0]->rowSet[$j][7];
+            }
+            $j++;
+        }
+        return null;
     }
 
 

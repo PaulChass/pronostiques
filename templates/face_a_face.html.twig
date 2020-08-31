@@ -6,7 +6,6 @@
 
 
 {% block body %}
-<h1 class="d-flex justify-content-center whitetitle"> Matchs à venir </h1>
 {% include 'matchs_de_la_nuit.html.twig' %}
 
 {% include 'navbar.html.twig' %}
@@ -15,42 +14,79 @@
 <div class="container-fluid">
   <div class="row">
    <div class="col-lg-2 order-lg-first col-6  order-2  ">
-      <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="transparent" data-tweet-limit="12">Twitter</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      
     </div>
     <div class="col-lg-2 col-6 order-last">
-      <a class="twitter-timeline" href="{{teams.1.twitter}}"  data-chrome="transparent" data-tweet-limit="12">Twitter</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+     
     </div>
     <div class="col-lg-8 col-10 col-sm-12 order-fisrt mx-auto">
-      <h3  class="whitetitle"> Cotes </h3>
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">Pari </label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>Face a Face</option>
-          <option>En attente du retour des cotes</option>
-          <option>Affichera la cote</option>
-          <option>permet d'enregirstrer le pari</option>
-          <option>et de comparer son roi aved des potos :-) </option>
-        </select>
+
+       {% for match in matchs %}
+      {% if match.HomeTeamId == game.hometeamid %}
+        {% if match.timeRemaining is defined and match.timeRemaining is not null %}
+     
+      
+      <h3  class="whitetitle" id="cotes"> Regardez le match en live !</h3>
+      <div class="form-group row " style="justify-content:space-evenly;font-size:5rem;width:100%;">
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;" href="http://nbastreams.xyz/live/{{match.id}}/"  onclick="window.open(this.href); return false;">Lien vers le match - {{teams.0.Stats.Team}} vs {{teams.1.Stats.Team}} </a>
       </div>
 
-      {% include 'intro.html.twig'%}
+      {% else %}
+      <h3  class="whitetitle" id="cotes"> Cotes </h3>
+      <div class="form-group row " style="justify-content:space-evenly;font-size:5rem;width:100%;">
+       
+        {% if odds is null %}
+        <p class="whitetitle" style="font-size:2rem;">Les cotes ne sont pas encore disponible... réessayez plus tard </p>
+        {% elseif  app.request.cookies.get('user') is null  %}
+         <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;">{{teams.0.Stats.Team}}: {{odds.1}} </a>
+        </div>
+        <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;">{{teams.1.Stats.Team}}: {{odds.2}} </a>
+        </div>        
+        <div id="alert" class="alert alert-info col-12 row" style="font-size:1.2rem;display:none" role="alert">
+        <span class="col-8">Vous devez être connecté pour pouvoir enregistrer un pari !  </span>
+        <a class="btn btn-success text-light col-2" href={{path('signin')}}> Se connecter </a> 
+        <a class="btn btn-secondary text-light col-2" href={{path('signup')}}> S'inscrire</a> 
+        </div>
+        {% elseif bet_error is not empty %}
+        <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;">{{teams.0.Stats.Team}}: {{odds.1}} </a>
+        </div>
+        <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;">{{teams.1.Stats.Team}}: {{odds.2}} </a>
+        </div> 
+        <div id="alert" class="alert alert-success col-12 row" style="font-size:1.2rem;" role="alert">
+        <span class="col-8"> {{bet_error}}  </span></div>
+        {% else %}
+        <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;" href={{ path('bet', {gameId: game.GameId,outcome:1,odd:odds.1})  }}>{{teams.0.Stats.Team}}: {{odds.1}} </a>
+        </div>
+        <div> 
+        <a class="btn btn-dark betbutton" style="color:white;font-size:1.5rem;"  href={{ path('bet', {gameId: game.GameId,outcome:3,odd:odds.2})  }}>{{teams.1.Stats.Team}}: {{odds.2}} </a>
+        </div> 
+        {% endif %}
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+
+          {% include 'intro.html.twig'%}
 
 
       <div>       
       <h3 id="equipes" class="whitetitle"> Stats des équipes </h3>
-        {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats,'hadvanced':teams.0.advancedStats,'aadvanced':teams.1.advancedStats, 'arrayTitle':'Stats Equipe par match ( classement )'} %}
-        {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Equipe 5 Derniers ( différence )'} %}
-        {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'arrayTitle':'Stats domicile vs stats exterieur  ( classement  )'} %}
+        {% include 'statarraytemplate.html.twig' with {'id': 'overall','home':teams.0.Stats,'away':teams.1.Stats, 'arrayTitle':'Stats Equipe Serie'} %}
+        {% include 'statarraytemplate.html.twig' with {'id': 'last5','home':teams.0.stats5,'away':teams.1.stats5, 'arrayTitle':'Stats Playoffs'} %}
+        {% include 'statarraytemplate.html.twig' with {'id': 'location','home':teams.0.statsLocation,'away':teams.1.statsLocation, 'hadvanced':teams.0.advancedStats,'aadvanced':teams.1.advancedStats, 'arrayTitle':'Stats Saison '} %}
       </div>
 
       <div class="" > 
       <h3 id="tendances" class="whitetitle">Tendances 5 derniers matchs</h3>
       <div class="row">
         <div class="col col-md-6">
-        {% for game in teams.0.last5games %}
-         <table class="table table-dark " style="opacity:0.9">
+        {% for game in teams.0.last5games|reverse %}
+         <table class="table table-dark " >
           {% if game[6][4:1] == '@' %}
             {% set abv = game[6]|split(' @ ')%}
             {% set at = '@' %}
@@ -73,7 +109,7 @@
        
         
         <div class="col">
-       {% for game in teams.1.last5games %}
+       {% for game in teams.1.last5games|reverse %}
           <table class="table table-dark">
           
           {% if game[6][4:1] == '@' %}
@@ -158,42 +194,49 @@
 
       
         
-      <h3 id="pronostiques" class="whitetitle"> Partagez votre pronostique </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
+      <h3 id="pronostics" class="whitetitle"> Partagez votre prono </h3>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            .
  
       <div class="container" >
             <div class="row">
               <div class="col-12">
                
-                <div class="comments-list bg-dark" style="color:white">
+                <div class="comments-list bg-dark" style="color:white;border-radius:10px">
 
                 {% for comment in comments %}
-                    <div class="media">
+                    <div class="media" style="padding:15px;margin-bottom:5px;">
                 
                           <a class="media-left" href="#">
-                            <img src="http://lorempixel.com/40/40/people/{{random(3)}}/">
+                            <img src="http://lorempixel.com/40/40/sports/{{random(3)}}/">
                           </a>
                           <div class="media-body">
                               
-                            <h4 class="media-heading user_name">{{comment.username}}-{{comment.bet}}</h4>
-                            {{comment.message}}
+                            <h4 class="media-heading user_name" style="margin-left:25px;"> {{comment.username}}:<span style="margin-left:40px;"> {{comment.bet}}</span></h4>
+                           <p style="margin-left:25px;"> {{comment.message}} </p>
                             
                           </div>
-                                                  <p class="pull-right"><small>{{ comment.PublishDate|date("h:i") }}</small></p>
+                                                  <p class="pull-right"><small>{{ comment.PublishDate|date("H:i") }}</small></p>
 
                     </div>
                   {% endfor %}
                 </div>
               </div>
             </div>
-      </div>
-
-        
-        
+      </div>  
         
       <div class="container">
         {{ form(form) }}
       </div>
-      
+      <div class="row" style="opacity:0.9">
+        <div class="col-6">
+          <a class="twitter-timeline" href="{{teams.0.twitter}}" data-chrome="no-footer" data-tweet-limit="12">Twitter</a>
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+        <div class="col-6">
+          <a class="twitter-timeline" href="{{teams.1.twitter}}" data-chrome="no-footer" data-tweet-limit="12">Twitter</a>
+          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+      </div>
 
     </div>
    

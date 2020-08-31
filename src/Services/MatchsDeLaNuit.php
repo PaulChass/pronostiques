@@ -17,7 +17,78 @@ class MatchsDeLaNuit
 **/
     public function MatchsDeLaNuit()
     {
-        $response= $this->curlRequest('http://www.elpauloloco.ovh/2020-07-30.json');
+        $date=time()-(6*60*60);
+        $response= $this->curlRequest('http://www.elpauloloco.ovh/'.date('Y-m-d',$date).'.json');
+        $responselive = $this->curlRequest('https://stats.nba.com/js/data/pointsbet/2019/'.date('Ymd',$date).'.json');
+        $matchsDeLaNuit=[];$match=[];
+
+        for ($i=0; $i < count($response->resultSets[0]->rowSet) ; $i++)
+        { 
+            $homeTeamAbv= substr($response->resultSets[0]->rowSet[$i][5],9,3);
+            $awayTeamAbv= substr($response->resultSets[0]->rowSet[$i][5],12,3);
+            
+            $match['HomeTeamId'] = $response->resultSets[0]->rowSet[$i][6]; 
+            $match['HomeLogoUrl']= 'https://stats.nba.com/media/img/teams/logos/'.$homeTeamAbv.'_logo.svg';
+            
+            $match['AwayTeamId'] = $response->resultSets[0]->rowSet[$i][7];
+            $match['AwayLogoUrl']= 'https://stats.nba.com/media/img/teams/logos/'.$awayTeamAbv.'_logo.svg';
+            
+            $match['GameId']= $response->resultSets[0]->rowSet[$i][2];
+            $gid=$match['GameId'];
+            $date = substr($response->resultSets[0]->rowSet[$i][4], 0, 7);
+            if(substr($date, -1)=='p')
+            {
+                $date=$date.'m';
+            }
+            if(isset($responselive->$gid->timeRemaining) && $responselive->$gid->timeRemaining!==null)
+            {
+                $match['period']= $responselive->$gid->period;
+                $match['timeRemaining']= $responselive->$gid->timeRemaining;
+                $match['homeScore']= $responselive->$gid->homeScore;
+                $match['awayScore']= $responselive->$gid->awayScore;
+                $match['id']=$i+1;
+                
+            }
+            else{
+                $match['period']= null;
+                $match['timeRemaining']= null;
+                $match['homeScore']= null;
+                $match['awayScore']= null;
+                $match['id']=null;
+
+            }
+            $match['Time']=date('H:i', mktime(date('H', strtotime($date))+6,date('i', strtotime($date))));
+
+            array_push($matchsDeLaNuit,$match);
+        }
+        return $matchsDeLaNuit;
+    }
+    private function getFrenchTeamNamebyId($id)
+    {
+        $teamsStats= $this->curlRequest('http://www.elpauloloco.ovh/TeamsStats.json');
+        $i=0;
+        while ($teamsStats->resultSets[0]->rowSet[$i][0] !=$id) {$i++;}
+        $string=$teamsStats->resultSets[0]->rowSet[$i][1];
+        $city = explode(' ', $string);
+        $removed = array_pop($city);
+        if(implode(' ',$city)=='Los Angeles'){
+                return 'LA Lakers';}
+        elseif($city[0]=='LA'){
+            return $city= 'LA Clippers';}
+        elseif ($city[0]=='Philadelphia') {
+            return $city = 'Philadelphie';}
+        elseif($city[0]=='Portland'){
+            return $city='Portland';
+        }
+        if (isset($city[1])){return implode(' ',$city);}
+        return $city[0];
+    }
+
+    public function MatchsDeDemain()
+    {
+        $today=time()-(6*60*60);
+        $tomorrow= $today + (24*60*60);
+        $response= $this->curlRequest('http://www.elpauloloco.ovh/'.date('Y-m-d',$tomorrow).'.json');
         
         $matchsDeLaNuit=[];$match=[];
         
@@ -34,12 +105,28 @@ class MatchsDeLaNuit
             
             $match['GameId']= $response->resultSets[0]->rowSet[$i][2];
             $date = substr($response->resultSets[0]->rowSet[$i][4], 0, 7);
+            if(substr($date, -1)=='p')
+            {
+                $date=$date.'m';
+            }
             $match['Time']=date('H:i', mktime(date('H', strtotime($date))+6,date('i', strtotime($date))));
-
             array_push($matchsDeLaNuit,$match);
         }
         return $matchsDeLaNuit;
     }
+    public function CotesFaceAFace($homeId,$awayId)
+    {
+        $cotesParionsSport = $this->curlRequest('https://www.pointdevente.parionssport.fdj.fr/api/1n2/offre?sport=601600');
+        for ($i=0; $i < count($cotesParionsSport); $i++) {
+                if($cotesParionsSport[$i]->label==$this->getFrenchTeamNamebyId($homeId).'-'.$this->getFrenchTeamNamebyId($awayId))
+                {
+                   $cote['1'] = $cotesParionsSport[$i]->outcomes[0]->cote;
+                    $cote['2']= $cotesParionsSport[$i]->outcomes[2]->cote;
+                   
+                    return $cote;
+                }
+            }
+        }
     private function curl_get_contents($url)
 {
   $ch = curl_init($url);
@@ -68,7 +155,11 @@ class MatchsDeLaNuit
         'q' => $hname.'VS'.$aname.'Full+Game+Recap',
         'maxResults' => 5,
         ));
-    $link= $response['items'][0]['id']['videoId'];return($link);
+        $link="";
+        if(isset($response['items'][0])){
+            $link= $response['items'][0]['id']['videoId'];
+        }    
+        return($link);
     }
 
     private function curlRequest($url)
@@ -83,5 +174,6 @@ class MatchsDeLaNuit
      $data = json_decode($result);
      return $data;
     }
+    
 
 }

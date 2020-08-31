@@ -21,6 +21,10 @@ class CommentFormBuilder extends AbstractController
         $comment = new comment();
         
         $comment->setUsername('Anonyme');
+        if(isset($_COOKIE['user']))
+        {        
+            $comment->setUsername($_COOKIE['user']);
+        }
         $comment->setPublishDate(new \DateTime());
         $repository = $this->getDoctrine()->getRepository(Game::class);
         $game = $repository->findOneBy(['gameId' => $gameId]);
